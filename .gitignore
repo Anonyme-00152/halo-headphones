@@ -7,7 +7,7 @@ tools/studio/out/
 baseline/
 baseline-site.zip
 
-# Fichiers locaux
+# Fichiers locaux (dont le jeton temporaire créé par `vercel link`)
 .claude/
 .vercel/
 .env*

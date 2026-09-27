@@ -6,3 +6,4 @@ server.js
 start.bat
 checklist-visuels.html
 README.md
+.env*
