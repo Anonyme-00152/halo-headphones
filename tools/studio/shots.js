@@ -71,6 +71,26 @@ export function heroFrame(stage, aspect, p) {
   return { scene, camera: frame(cam(), aspect, { target, dir, fit: [fitH * 1.1, fitH] }) };
 }
 
+// Mobile hero (portrait, scroll-driven): from the logo on the right cup back to the upright side profile,
+// ending in the same pose as the static mobile hero image, with room for the title at the bottom.
+export function heroMobileFrame(stage, aspect, p) {
+  const e = p < 0.5 ? 2 * p * p : 1 - (-2 * p + 2) ** 2 / 2;
+  const yaw = -Math.PI / 2 + 0.55 - 0.41 * e;
+  const scene = upright(stage, 'gradient', 'silver', yaw, 0);
+  const lerp = (a, b) => a.map((v, i) => v + (b[i] - v) * e);
+  const rot = ([x, y, z]) => [x * Math.cos(yaw) + z * Math.sin(yaw), y, -x * Math.sin(yaw) + z * Math.cos(yaw)];
+  const target = lerp(rot([HP.cupX + HP.depth / 2, 0.3, 0]), [-0.2, CENTER_Y - 3.4, 0]);
+  const dir = lerp(rot([1, 0.08, 0.2]), [0, 0.05, 1]);
+  const fitH = Math.exp(Math.log(10) + (Math.log(36) - Math.log(10)) * e);
+  return { scene, camera: frame(cam(), aspect, { target, dir, fit: [fitH * aspect, fitH], fov: 20 }) };
+}
+
+// Link preview (1200×630): the hero headphones on the right half, the left half left free for text.
+export function ogFrame(stage, aspect) {
+  const scene = upright(stage, 'gradient', 'silver', -0.55, 0.06);
+  return { scene, camera: frame(cam(), aspect, { target: [-11, CENTER_Y - 0.3, 0], dir: [0.04, 0.12, 1], fit: [50, 26] }) };
+}
+
 const ease = p => (p < 0.5 ? 2 * p * p : 1 - (-2 * p + 2) ** 2 / 2);
 
 // "Who it's for" video: on white, from the logo on the right cup back to the whole headphones.

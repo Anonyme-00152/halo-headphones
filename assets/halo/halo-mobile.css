@@ -1,0 +1,90 @@
+/* HALO — animations sur téléphone et tablette (< 992 px), pilotées par halo-mobile.js.
+   Taptop désactive toutes les animations de la version desktop sous 992 px ; ces règles
+   préparent les sections mobiles (« --static ») pour rejouer la même chorégraphie. */
+@media (max-width: 991px) {
+  /* Écran de chargement (compteur 0 → 100 %), comme sur desktop */
+  section.preload {
+    display: block !important;
+    position: fixed !important;
+    inset: 0;
+    height: 100vh !important;
+    height: 100svh !important;
+  }
+
+  /* Accueil : séquence d'images pilotée par le scroll, dessinée sur un canvas */
+  .halo-m-hero {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .halo-m-hero canvas { display: block; width: 100%; height: 100%; }
+  .halo-m-ready #ii49wtv8t_0 { visibility: hidden; }
+  #ipweesw9a_0 { position: relative; z-index: 1; }
+
+  /* Rideaux blancs qui recouvrent l'accueil avant les spécifications */
+  .halo-m-curtains {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    pointer-events: none;
+  }
+  .halo-m-curtains i { flex: 1; background: #fff; transform: translateY(101%); }
+  .halo-m-shade {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: #000;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Transition vers « Who it's for » : bandes noires qui s'étirent */
+  .halo-m-wipe {
+    position: relative;
+    height: 100vh;
+    height: 100svh;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .halo-m-wipe i { flex: 1; background: #000; width: 100%; transform: scaleX(0); transform-origin: left; }
+
+  /* Sections avec des éléments qui entrent par le côté ou zooment */
+  .who--static, .details--static { overflow-x: clip; }
+  .details__card--static, .details__video-content--static { overflow: hidden; }
+
+  /* Mots colorés progressivement au scroll */
+  .halo-m-word { display: inline; }
+
+  /* Inside the box : cercle blanc qui envahit l'écran */
+  .halo-m-circle-host { position: relative; overflow: hidden; }
+  .halo-m-circle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 160vmax;
+    height: 160vmax;
+    margin: -80vmax 0 0 -80vmax;
+    border-radius: 50%;
+    background: #fff;
+    transform: scale(0);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .halo-m-circle-host > :not(.halo-m-circle) { position: relative; z-index: 1; }
+
+  /* Stores qui se lèvent sur les visuels d'Inside the box */
+  .halo-m-blinds-host { position: relative; overflow: hidden; }
+  .halo-m-blinds {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    pointer-events: none;
+  }
+  .halo-m-blinds i { flex: 1; background: #fff; transform-origin: top; margin-bottom: -1px; }
+}
