@@ -79,9 +79,11 @@ export function heroMobileFrame(stage, aspect, p) {
   const scene = upright(stage, 'gradient', 'silver', yaw, 0);
   const lerp = (a, b) => a.map((v, i) => v + (b[i] - v) * e);
   const rot = ([x, y, z]) => [x * Math.cos(yaw) + z * Math.sin(yaw), y, -x * Math.sin(yaw) + z * Math.cos(yaw)];
-  const target = lerp(rot([HP.cupX + HP.depth / 2, 0.3, 0]), [-0.2, CENTER_Y - 3.4, 0]);
+  // Final pose: headphones between ~14 % and ~62 % of the height, clear of the title (from ~74 % on phones)
+  // and of the header, and still whole on tablets where the frame is cropped top and bottom.
+  const target = lerp(rot([HP.cupX + HP.depth / 2, 0.3, 0]), [-0.2, CENTER_Y - 5.45, 0]);
   const dir = lerp(rot([1, 0.08, 0.2]), [0, 0.05, 1]);
-  const fitH = Math.exp(Math.log(10) + (Math.log(36) - Math.log(10)) * e);
+  const fitH = Math.exp(Math.log(10) + (Math.log(45) - Math.log(10)) * e);
   return { scene, camera: frame(cam(), aspect, { target, dir, fit: [fitH * aspect, fitH], fov: 20 }) };
 }
 
