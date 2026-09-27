@@ -1,0 +1,1032 @@
+[
+ {
+  "path": "f/0_refinedcover_03_09.json",
+  "shot": "hero-lottie",
+  "w": 1920,
+  "h": 1080,
+  "format": "Lottie JSON",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024
+  ],
+  "card": "Animation du stylo (Lottie)",
+  "frames": 76,
+  "fps": 15
+ },
+ {
+  "path": "thumb/2/zOzK4LBsVJn0W98Pf5CalQ/364r1526/d/library_image-14634-symbol-is6ru9kkd-nota_hero_image_adaptive_866220.png",
+  "shot": "hero-mobile",
+  "w": 364,
+  "h": 1526,
+  "format": "PNG",
+  "alpha": true,
+  "widths": [
+   900,
+   600,
+   375
+  ],
+  "card": "Stylo — image fixe (tablette / mobile)"
+ },
+ {
+  "path": "thumb/2/E_-dKzAg6YZhD4xJJ6rAMA/233r734/d/library_image-14700-symbol-iw3g92519-nota_scene_2_img.png",
+  "shot": "specs-profile",
+  "w": 233,
+  "h": 734,
+  "format": "PNG",
+  "alpha": true,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024
+  ],
+  "card": "Photo verticale du produit"
+ },
+ {
+  "path": "thumb/2/DpQxNCkA1E7yEZmCJGLyNA/471r2052/d/library_image-14699-symbol-icoj9ef2j-scene2-adaptive768-ezgifcom-png-to-webp-converter.webp",
+  "shot": "specs-profile",
+  "w": 471,
+  "h": 2052,
+  "format": "WebP",
+  "alpha": false,
+  "widths": [
+   900
+  ],
+  "card": "Photo verticale du produit"
+ },
+ {
+  "path": "thumb/2/xuUeDdKthCFm9DOCDquDXw/896r141/d/library_image-14699-symbol-icoj9ef2j-scene2-adaptive480-ezgifcom-png-to-webp-converter.webp",
+  "shot": "specs-profile",
+  "w": 896,
+  "h": 141,
+  "format": "WebP",
+  "alpha": false,
+  "widths": [
+   600,
+   375
+  ],
+  "card": "Photo verticale du produit"
+ },
+ {
+  "path": "f/25824d842058045cd73c3feba327dd09_1920.mp4",
+  "shot": "video-who",
+  "w": 1920,
+  "h": 1080,
+  "format": "MP4",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024,
+   900,
+   600,
+   375
+  ],
+  "card": "Vidéo de la section",
+  "duration": 5.1
+ },
+ {
+  "path": "thumb/2/hkWO_0PdjAnQD0OeUgMd8g/1920r1080/d/nota_scene_4_img_01.jpg",
+  "shot": "paper-folded",
+  "w": 1920,
+  "h": 1080,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024
+  ],
+  "card": "Slide 1 — carnet fermé"
+ },
+ {
+  "path": "thumb/2/NdNsA4zjgwV803LVWQCIkg/1276r2108/d/41_block.jpg",
+  "shot": "paper-folded",
+  "w": 926,
+  "h": 1234,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   900
+  ],
+  "card": "Slide 1 — carnet fermé"
+ },
+ {
+  "path": "thumb/2/Tve6Pa_mEfVFg1C_ZXVEtw/1276r2108/d/41_block_480.jpg",
+  "shot": "paper-folded",
+  "w": 480,
+  "h": 680,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   600
+  ],
+  "card": "Slide 1 — carnet fermé"
+ },
+ {
+  "path": "thumb/2/5UFl0MtPdpTU7FJxOYseJQ/480r1020/d/41_block_mobile_1.jpg",
+  "shot": "paper-folded",
+  "w": 480,
+  "h": 1020,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   375
+  ],
+  "card": "Slide 1 — carnet fermé"
+ },
+ {
+  "path": "thumb/2/F_P4aLU5KdbclXhQnZ2QpQ/640r480/d/41_block.jpg",
+  "shot": "paper-folded",
+  "w": 360,
+  "h": 480,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [],
+  "card": "Slide 1 — carnet fermé"
+ },
+ {
+  "path": "thumb/2/7YfwgKVakw18X4hnPZia0Q/1920r1080/d/nota_scene_4_img_02.jpg",
+  "shot": "paper-cushion",
+  "w": 1920,
+  "h": 1080,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024
+  ],
+  "card": "Slide 2 — carnet ouvert (motif)"
+ },
+ {
+  "path": "thumb/2/V-Pld1tdphvc6bqPvkKsvw/1276r2108/d/42_block.jpg",
+  "shot": "paper-cushion",
+  "w": 1276,
+  "h": 1700,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   900
+  ],
+  "card": "Slide 2 — carnet ouvert (motif)"
+ },
+ {
+  "path": "thumb/2/DsywoH6-Vx8zTSoNO75b-A/1276r2108/d/42_block_480.jpg",
+  "shot": "paper-cushion",
+  "w": 480,
+  "h": 680,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   600
+  ],
+  "card": "Slide 2 — carnet ouvert (motif)"
+ },
+ {
+  "path": "thumb/2/thSkq4Kg7lqMfHmr5pPYxQ/480r1020/d/41_block_mobile_2.jpg",
+  "shot": "paper-cushion",
+  "w": 480,
+  "h": 1020,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   375
+  ],
+  "card": "Slide 2 — carnet ouvert (motif)"
+ },
+ {
+  "path": "thumb/2/FulYM5xyA7yVsDY4-9XuHQ/640r480/d/42_block.jpg",
+  "shot": "paper-cushion",
+  "w": 360,
+  "h": 480,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [],
+  "card": "Slide 2 — carnet ouvert (motif)"
+ },
+ {
+  "path": "thumb/2/5RXD9D7cr-Ez9A9KxlC5hw/1920r1080/d/nota_scene_4_img_03.jpg",
+  "shot": "paper-case",
+  "w": 1920,
+  "h": 1080,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024
+  ],
+  "card": "Slide 3 — notes manuscrites"
+ },
+ {
+  "path": "thumb/2/uY0WbSXhbz5r3fxyMekPng/1276r2108/d/43_block.jpg",
+  "shot": "paper-case",
+  "w": 1276,
+  "h": 1701,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   900
+  ],
+  "card": "Slide 3 — notes manuscrites"
+ },
+ {
+  "path": "thumb/2/XAWvWz3aFFaaSsy_luH5-w/1276r2108/d/43_block_480.jpg",
+  "shot": "paper-case",
+  "w": 480,
+  "h": 680,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   600
+  ],
+  "card": "Slide 3 — notes manuscrites"
+ },
+ {
+  "path": "thumb/2/vlxkkI1Wv5e9o1FRJ6IWmA/480r1020/d/41_block_mobile_4.jpg",
+  "shot": "paper-case",
+  "w": 480,
+  "h": 1020,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   375
+  ],
+  "card": "Slide 3 — notes manuscrites"
+ },
+ {
+  "path": "thumb/2/lgfT49LtqL0FbROrmSOYew/640r480/d/43_block.jpg",
+  "shot": "paper-case",
+  "w": 360,
+  "h": 480,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [],
+  "card": "Slide 3 — notes manuscrites"
+ },
+ {
+  "path": "thumb/2/XYdQ9jPC6FwmZfYcoOuhgQ/1920r1080/d/nota_scene_4_img_04.jpg",
+  "shot": "paper-phone",
+  "w": 1920,
+  "h": 1080,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024
+  ],
+  "card": "Slide 4 — téléphone synchronisé"
+ },
+ {
+  "path": "thumb/2/ctuI-vbcqn2J7cCUXnBXig/1276r2108/d/41_block1212.png",
+  "shot": "paper-phone",
+  "w": 1276,
+  "h": 2108,
+  "format": "PNG",
+  "alpha": true,
+  "widths": [
+   900,
+   600
+  ],
+  "card": "Slide 4 — téléphone synchronisé"
+ },
+ {
+  "path": "thumb/2/_n2BDCbkxVH2Lw8Lt0bM7g/480r1020/d/41_block_mobile_3.jpg",
+  "shot": "paper-phone",
+  "w": 480,
+  "h": 1020,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   375
+  ],
+  "card": "Slide 4 — téléphone synchronisé"
+ },
+ {
+  "path": "thumb/2/-wr1GZBOmPey4dEvavt0Fw/640r480/d/41_block1212.png",
+  "shot": "paper-phone",
+  "w": 290,
+  "h": 480,
+  "format": "PNG",
+  "alpha": true,
+  "widths": [],
+  "card": "Slide 4 — téléphone synchronisé"
+ },
+ {
+  "path": "d/library_image-14643-symbol-ispnvazts-nota_scene_5_img1.jpg",
+  "shot": "inside-box",
+  "w": 1840,
+  "h": 1000,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440
+  ],
+  "card": "Le coffret ouvert (inside.box)"
+ },
+ {
+  "path": "d/library_image-14643-symbol-ispnvazts-nota_scene_5_img_01_adaptive.jpg",
+  "shot": "inside-box",
+  "w": 952,
+  "h": 670,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1280,
+   1024
+  ],
+  "card": "Le coffret ouvert (inside.box)"
+ },
+ {
+  "path": "d/library_image-14642-symbol-it4oyiz32-nota_scene_5_img_01_adaptive.jpg",
+  "shot": "inside-box",
+  "w": 952,
+  "h": 670,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   900,
+   600
+  ],
+  "card": "Le coffret ouvert (inside.box)"
+ },
+ {
+  "path": "d/library_image-14642-symbol-it4oyiz32-scene_5_320_smartpaper.jpg",
+  "shot": "inside-box",
+  "w": 549,
+  "h": 805,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   375
+  ],
+  "card": "Le coffret ouvert (inside.box)"
+ },
+ {
+  "path": "d/library_image-14643-symbol-ispnvazts-scene_5_320_smartpaper.jpg",
+  "shot": "inside-box",
+  "w": 549,
+  "h": 805,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [],
+  "card": "Le coffret ouvert (inside.box)"
+ },
+ {
+  "path": "d/library_image-14643-symbol-ispnvazts-nota_scene_5_img_02.jpg",
+  "shot": "inside-cup",
+  "w": 900,
+  "h": 1000,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024
+  ],
+  "card": "Le stylo (inside.item1)"
+ },
+ {
+  "path": "d/library_image-14642-symbol-it4oyiz32-scene_5_768_devise-1.png",
+  "shot": "inside-cup",
+  "w": 736,
+  "h": 630,
+  "format": "PNG",
+  "alpha": false,
+  "widths": [
+   900
+  ],
+  "card": "Le stylo (inside.item1)"
+ },
+ {
+  "path": "d/library_image-14642-symbol-it4oyiz32-scene_5_pen_static_480.png",
+  "shot": "inside-cup",
+  "w": 448,
+  "h": 440,
+  "format": "PNG",
+  "alpha": false,
+  "widths": [
+   600
+  ],
+  "card": "Le stylo (inside.item1)"
+ },
+ {
+  "path": "d/library_image-14642-symbol-it4oyiz32-scene_5_pen_static_320.png",
+  "shot": "inside-cup",
+  "w": 300,
+  "h": 440,
+  "format": "PNG",
+  "alpha": false,
+  "widths": [
+   375
+  ],
+  "card": "Le stylo (inside.item1)"
+ },
+ {
+  "path": "d/library_image-14643-symbol-ispnvazts-nota_scene_5_img_03.jpg",
+  "shot": "inside-case",
+  "w": 900,
+  "h": 1000,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024
+  ],
+  "card": "L'adaptateur (inside.item2)"
+ },
+ {
+  "path": "d/library_image-14642-symbol-it4oyiz32-nota_scene_5_img3_768.jpg",
+  "shot": "inside-case",
+  "w": 736,
+  "h": 630,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   900
+  ],
+  "card": "L'adaptateur (inside.item2)"
+ },
+ {
+  "path": "d/library_image-14642-symbol-it4oyiz32-nota_scene_5_img3_480.jpg",
+  "shot": "inside-case",
+  "w": 448,
+  "h": 440,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   600
+  ],
+  "card": "L'adaptateur (inside.item2)"
+ },
+ {
+  "path": "d/library_image-14642-symbol-it4oyiz32-scene_5_adapter_static_320.png",
+  "shot": "inside-case",
+  "w": 300,
+  "h": 440,
+  "format": "PNG",
+  "alpha": false,
+  "widths": [
+   375
+  ],
+  "card": "L'adaptateur (inside.item2)"
+ },
+ {
+  "path": "d/library_image-14643-symbol-ispnvazts-new-scene_5_adapter.jpg",
+  "shot": "inside-case-top",
+  "w": 900,
+  "h": 1000,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024
+  ],
+  "card": "Adaptateur — image au survol"
+ },
+ {
+  "path": "d/library_image-14642-symbol-it4oyiz32-new-scene_5_adapter.jpg",
+  "shot": "inside-case-top",
+  "w": 900,
+  "h": 1000,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   900,
+   600,
+   375
+  ],
+  "card": "Adaptateur — image au survol"
+ },
+ {
+  "path": "d/library_image-14686-symbol-i71z9t68q-nota_scene_6_img_01.jpg",
+  "shot": "detail-band",
+  "w": 900,
+  "h": 787,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440
+  ],
+  "card": "Gros plan 1"
+ },
+ {
+  "path": "d/library_image-14686-symbol-i71z9t68q-scene_6_992_card-1.jpg",
+  "shot": "detail-band",
+  "w": 600,
+  "h": 712,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1280,
+   1024
+  ],
+  "card": "Gros plan 1"
+ },
+ {
+  "path": "d/library_image-14685-symbol-iag8qchrn-nota_scene_6_img_01.jpg",
+  "shot": "detail-band",
+  "w": 900,
+  "h": 787,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   900
+  ],
+  "card": "Gros plan 1"
+ },
+ {
+  "path": "d/library_image-14685-symbol-iag8qchrn-scene_6_480_card-1.png",
+  "shot": "detail-band",
+  "w": 655,
+  "h": 468,
+  "format": "PNG",
+  "alpha": true,
+  "widths": [
+   600
+  ],
+  "card": "Gros plan 1"
+ },
+ {
+  "path": "d/library_image-14685-symbol-iag8qchrn-scene_6_320_card-1.png",
+  "shot": "detail-band",
+  "w": 458,
+  "h": 488,
+  "format": "PNG",
+  "alpha": true,
+  "widths": [
+   375
+  ],
+  "card": "Gros plan 1"
+ },
+ {
+  "path": "d/library_image-14685-symbol-iag8qchrn-scene_6_992_card-1.jpg",
+  "shot": "detail-band",
+  "w": 600,
+  "h": 712,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [],
+  "card": "Gros plan 1"
+ },
+ {
+  "path": "d/library_image-14686-symbol-i71z9t68q-nota_scene_6_img_02.jpg",
+  "shot": "detail-arm",
+  "w": 900,
+  "h": 1200,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024
+  ],
+  "card": "Gros plan 2"
+ },
+ {
+  "path": "d/library_image-14685-symbol-iag8qchrn-nota_scene_6_img_02.jpg",
+  "shot": "detail-arm",
+  "w": 900,
+  "h": 1200,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   900
+  ],
+  "card": "Gros plan 2"
+ },
+ {
+  "path": "d/library_image-14685-symbol-iag8qchrn-scene_6_480_card-2.png",
+  "shot": "detail-arm",
+  "w": 655,
+  "h": 731,
+  "format": "PNG",
+  "alpha": true,
+  "widths": [
+   600
+  ],
+  "card": "Gros plan 2"
+ },
+ {
+  "path": "d/library_image-14685-symbol-iag8qchrn-scene_6_320_card-2.png",
+  "shot": "detail-arm",
+  "w": 458,
+  "h": 763,
+  "format": "PNG",
+  "alpha": true,
+  "widths": [
+   375
+  ],
+  "card": "Gros plan 2"
+ },
+ {
+  "path": "d/library_image-14686-symbol-i71z9t68q-nota_scene_6_img_03.jpg",
+  "shot": "detail-button",
+  "w": 450,
+  "h": 373,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024
+  ],
+  "card": "Gros plan 3"
+ },
+ {
+  "path": "d/library_image-14685-symbol-iag8qchrn-scene_6_768_card-3.png",
+  "shot": "detail-button",
+  "w": 1225,
+  "h": 833,
+  "format": "PNG",
+  "alpha": false,
+  "widths": [
+   900,
+   600,
+   375
+  ],
+  "card": "Gros plan 3"
+ },
+ {
+  "path": "d/library_image-14686-symbol-i71z9t68q-nota_scene_6_img_05.jpg",
+  "shot": "detail-cup-edge",
+  "w": 1370,
+  "h": 900,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920
+  ],
+  "card": "Gros plan 4"
+ },
+ {
+  "path": "d/library_image-14686-symbol-i71z9t68q-scene_6_1440_card_5.png",
+  "shot": "detail-cup-edge",
+  "w": 1223,
+  "h": 804,
+  "format": "PNG",
+  "alpha": false,
+  "widths": [
+   1440
+  ],
+  "card": "Gros plan 4"
+ },
+ {
+  "path": "d/library_image-14686-symbol-i71z9t68q-scene_6_992_card-5.jpg",
+  "shot": "detail-cup-edge",
+  "w": 709,
+  "h": 664,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1280,
+   1024
+  ],
+  "card": "Gros plan 4"
+ },
+ {
+  "path": "d/library_image-14685-symbol-iag8qchrn-scene_6_768_card-5.png",
+  "shot": "detail-cup-edge",
+  "w": 1226,
+  "h": 999,
+  "format": "PNG",
+  "alpha": false,
+  "widths": [
+   900
+  ],
+  "card": "Gros plan 4"
+ },
+ {
+  "path": "d/library_image-14685-symbol-iag8qchrn-scene_6_480_card-5.png",
+  "shot": "detail-cup-edge",
+  "w": 752,
+  "h": 537,
+  "format": "PNG",
+  "alpha": false,
+  "widths": [
+   600
+  ],
+  "card": "Gros plan 4"
+ },
+ {
+  "path": "d/library_image-14685-symbol-iag8qchrn-scene_6_320_card-5.png",
+  "shot": "detail-cup-edge",
+  "w": 458,
+  "h": 488,
+  "format": "PNG",
+  "alpha": false,
+  "widths": [
+   375
+  ],
+  "card": "Gros plan 4"
+ },
+ {
+  "path": "d/library_image-14686-symbol-i71z9t68q-nota_scene_6_img_06.jpg",
+  "shot": "detail-cushion",
+  "w": 430,
+  "h": 600,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024
+  ],
+  "card": "Gros plan 5"
+ },
+ {
+  "path": "d/library_image-14685-symbol-iag8qchrn-scene_6_768_card-6.png",
+  "shot": "detail-cushion",
+  "w": 1226,
+  "h": 833,
+  "format": "PNG",
+  "alpha": false,
+  "widths": [
+   900,
+   600
+  ],
+  "card": "Gros plan 5"
+ },
+ {
+  "path": "d/library_image-14685-symbol-iag8qchrn-scene_6_320_card-6.png",
+  "shot": "detail-cushion",
+  "w": 571,
+  "h": 476,
+  "format": "PNG",
+  "alpha": false,
+  "widths": [
+   375
+  ],
+  "card": "Gros plan 5"
+ },
+ {
+  "path": "f/7b66fa812d04f9c7075f91ef42d4dd53_1920.mp4",
+  "shot": "video-details",
+  "w": 1920,
+  "h": 1080,
+  "format": "MP4",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024,
+   900,
+   600,
+   375
+  ],
+  "card": "Vidéo des gros plans",
+  "duration": 5.2
+ },
+ {
+  "path": "thumb/2/s3CSLofcpmb3mJNh_0AxHg/1920r1080/d/library_image-14782-symbol-icmdrs40h-nota_scene_7_img_01.jpg",
+  "shot": "color-silver",
+  "w": 1920,
+  "h": 1080,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024
+  ],
+  "card": "Slide 1 — slogan (stylo argent)"
+ },
+ {
+  "path": "thumb/2/1SLA07O2y250d4sm92qnPg/1920r1080/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_01.jpg",
+  "shot": "color-silver",
+  "w": 1920,
+  "h": 1080,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   900,
+   600,
+   375
+  ],
+  "card": "Slide 1 — slogan (stylo argent)"
+ },
+ {
+  "path": "thumb/2/ciZeEz-h5_evM5-gO1f6Eg/640r480/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_01.jpg",
+  "shot": "color-silver",
+  "w": 640,
+  "h": 360,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [],
+  "card": "Slide 1 — slogan (stylo argent)"
+ },
+ {
+  "path": "thumb/2/57-AneXzVvhacM8Plv-mCA/1920r1080/d/library_image-14782-symbol-icmdrs40h-nota_scene_7_img_02.jpg",
+  "shot": "color-graphite",
+  "w": 1920,
+  "h": 1080,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024
+  ],
+  "card": "Slide 2 — colors.color1 (stylo noir)"
+ },
+ {
+  "path": "thumb/2/TYFFgx_5tk3Z54ItqSDO4w/1920r1080/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_02.jpg",
+  "shot": "color-graphite",
+  "w": 1920,
+  "h": 1080,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   900,
+   600,
+   375
+  ],
+  "card": "Slide 2 — colors.color1 (stylo noir)"
+ },
+ {
+  "path": "thumb/2/Wqh87Gl2CN8OVFAfRap5yA/640r480/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_02.jpg",
+  "shot": "color-graphite",
+  "w": 640,
+  "h": 360,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [],
+  "card": "Slide 2 — colors.color1 (stylo noir)"
+ },
+ {
+  "path": "thumb/2/rsmkTaYuQrbSkzUYU_iQWg/1920r1080/d/library_image-14782-symbol-icmdrs40h-nota_scene_7_img_03.jpg",
+  "shot": "color-blue",
+  "w": 1920,
+  "h": 1080,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024
+  ],
+  "card": "Slide 3 — colors.color2 (stylo bleu)"
+ },
+ {
+  "path": "thumb/2/WoVgGWdUhndJDCN4Hp4Y4w/1920r1080/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_03.jpg",
+  "shot": "color-blue",
+  "w": 1920,
+  "h": 1080,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   900,
+   600,
+   375
+  ],
+  "card": "Slide 3 — colors.color2 (stylo bleu)"
+ },
+ {
+  "path": "thumb/2/6OMVYVgdmKC7DNiM4U6VQA/640r480/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_03.jpg",
+  "shot": "color-blue",
+  "w": 640,
+  "h": 360,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [],
+  "card": "Slide 3 — colors.color2 (stylo bleu)"
+ },
+ {
+  "path": "thumb/2/nTFFf7KN2tETtuSq70lj1Q/1920r1080/d/library_image-14782-symbol-icmdrs40h-nota_scene_7_img_04.jpg",
+  "shot": "color-red",
+  "w": 1920,
+  "h": 1080,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024
+  ],
+  "card": "Slide 4 — colors.color3 (stylo rouge)"
+ },
+ {
+  "path": "thumb/2/p8a6t6D7aO3tSc3x4pW7nw/1920r1080/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_04.jpg",
+  "shot": "color-red",
+  "w": 1920,
+  "h": 1080,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   900,
+   600,
+   375
+  ],
+  "card": "Slide 4 — colors.color3 (stylo rouge)"
+ },
+ {
+  "path": "thumb/2/0-g6exQXkmwgv8_CQyqdCQ/640r480/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_04.jpg",
+  "shot": "color-red",
+  "w": 640,
+  "h": 360,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [],
+  "card": "Slide 4 — colors.color3 (stylo rouge)"
+ },
+ {
+  "path": "thumb/2/frnjDUP5_aZbwYf4snvBAw/1920r1080/d/library_image-14782-symbol-icmdrs40h-nota_scene_7_img_05.jpg",
+  "shot": "color-orange",
+  "w": 1920,
+  "h": 1080,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   1920,
+   1440,
+   1280,
+   1024
+  ],
+  "card": "Slide 5 — colors.color4 (stylo orange)"
+ },
+ {
+  "path": "thumb/2/XcxX2unL4tshlrNkYB4sRg/1920r1080/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_05.jpg",
+  "shot": "color-orange",
+  "w": 1920,
+  "h": 1080,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [
+   900,
+   600,
+   375
+  ],
+  "card": "Slide 5 — colors.color4 (stylo orange)"
+ },
+ {
+  "path": "thumb/2/FzvL-ikeG_QJvupknDRhww/640r480/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_05.jpg",
+  "shot": "color-orange",
+  "w": 640,
+  "h": 360,
+  "format": "JPG",
+  "alpha": false,
+  "widths": [],
+  "card": "Slide 5 — colors.color4 (stylo orange)"
+ },
+ {
+  "path": "thumb/2/48v7oqZUAYG0LHOJ-CgFqA/1472r1008/d/library_image-14639-symbol-ibp1e2m59-popup_order-img.png",
+  "shot": "order-popup",
+  "w": 1472,
+  "h": 1008,
+  "format": "PNG",
+  "alpha": true,
+  "widths": [
+   900
+  ],
+  "card": "Produit dans la popup « Order »"
+ },
+ {
+  "path": "thumb/2/89XFsBtyOJQj6l1MDE9mcA/896r578/d/library_image-14639-symbol-ibp1e2m59-popup_order-img480.png",
+  "shot": "order-popup",
+  "w": 896,
+  "h": 578,
+  "format": "PNG",
+  "alpha": true,
+  "widths": [
+   600
+  ],
+  "card": "Produit dans la popup « Order »"
+ },
+ {
+  "path": "thumb/2/23v_cjk1hEG0m1FgxLR3Qg/600r590/d/library_image-14639-symbol-ibp1e2m59-popup_order-img320.png",
+  "shot": "order-popup",
+  "w": 600,
+  "h": 590,
+  "format": "PNG",
+  "alpha": true,
+  "widths": [
+   375
+  ],
+  "card": "Produit dans la popup « Order »"
+ }
+]

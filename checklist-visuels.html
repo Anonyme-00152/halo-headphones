@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checklist visuels</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif&display=swap">
+<style>
+:root {
+  --bg: #f4f3f1; --surface: #fff; --text: #141414; --muted: #6b6b6b; --line: #e3e1dd;
+  --chip: #ecebe8; --accent: #141414; --accent-text: #fff;
+  --ok: #1f7a3a; --ok-bg: #e3f3e7; --warn: #8a5a00; --warn-bg: #fdf0d5; --err: #b3261e; --err-bg: #fbe4e2;
+  --todo: #55524d; --todo-bg: #ecebe8; --preview: #e9e7e3; --checker: #dcd9d4;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #111; --surface: #1b1b1b; --text: #f1f0ee; --muted: #9a9894; --line: #2c2c2c;
+    --chip: #262626; --accent: #f1f0ee; --accent-text: #111;
+    --ok: #7fd39a; --ok-bg: #16301f; --warn: #f0c060; --warn-bg: #33280f; --err: #ff8a80; --err-bg: #3a1614;
+    --todo: #c9c6c1; --todo-bg: #2a2a2a; --preview: #232323; --checker: #2e2e2e;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 Inter, system-ui, sans-serif; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 40px 24px 80px; }
+h1, h2 { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; letter-spacing: -0.01em; margin: 0; }
+h1 { font-size: clamp(40px, 6vw, 64px); line-height: 1; }
+h2 { font-size: 34px; line-height: 1.1; }
+.eyebrow { color: var(--muted); font-size: 13px; letter-spacing: .04em; text-transform: uppercase; margin-bottom: 12px; }
+.intro { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: end; margin-bottom: 32px; }
+.steps { margin: 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 10px; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 26px 1fr; gap: 10px; color: var(--muted); }
+.steps li::before { content: counter(s); width: 26px; height: 26px; border-radius: 50%; background: var(--chip); color: var(--text); display: grid; place-items: center; font-size: 13px; font-weight: 600; }
+.steps b { color: var(--text); font-weight: 600; }
+.bar { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); margin: 0 -24px 8px; padding: 12px 24px; display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; }
+.progress { display: flex; align-items: center; gap: 12px; min-width: 240px; flex: 1; }
+.progress-track { flex: 1; height: 6px; border-radius: 3px; background: var(--chip); overflow: hidden; max-width: 260px; }
+.progress-fill { height: 100%; width: 0; background: var(--ok); transition: width .4s; }
+.progress-label { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+.seg { display: inline-flex; background: var(--chip); border-radius: 999px; padding: 3px; }
+.seg button { border: 0; background: none; color: var(--muted); font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 999px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--text); box-shadow: 0 1px 2px rgb(0 0 0 / .08); }
+label.toggle { display: inline-flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); cursor: pointer; }
+nav.sections { display: flex; gap: 6px; width: 100%; overflow-x: auto; scrollbar-width: none; }
+nav.sections::-webkit-scrollbar { display: none; }
+nav.sections a { flex: none; font-size: 13px; color: var(--text); text-decoration: none; padding: 5px 11px; border-radius: 999px; background: var(--chip); }
+nav.sections a .n { color: var(--muted); margin-left: 4px; font-variant-numeric: tabular-nums; }
+nav.sections a.done .n { color: var(--ok); }
+section.group { padding-top: 40px; scroll-margin-top: 110px; }
+.group-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 6px; }
+.group-desc { color: var(--muted); margin: 0 0 18px; max-width: 70ch; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; }
+.card.is-done { border-color: color-mix(in srgb, var(--ok) 40%, var(--line)); }
+.preview { position: relative; aspect-ratio: 16 / 10; background: var(--preview); display: grid; place-items: center; overflow: hidden; }
+.preview.alpha { background-color: var(--preview); background-image: conic-gradient(var(--checker) 25%, transparent 0 50%, var(--checker) 0 75%, transparent 0); background-size: 18px 18px; }
+.preview.logo { background: #8f8d89; }
+.preview img, .preview video { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+.preview.logo img { width: 60%; height: 60%; }
+.preview .tag { position: absolute; left: 10px; top: 10px; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: rgb(0 0 0 / .6); color: #fff; }
+.body { padding: 14px 16px 16px; display: grid; gap: 10px; }
+.title-row { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.card h3 { margin: 0; font-size: 15px; font-weight: 600; }
+.badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: var(--chip); color: var(--muted); white-space: nowrap; }
+.note { font-size: 13px; color: var(--muted); margin: 0; }
+.alt { font-size: 12px; color: var(--muted); }
+.alt code { color: var(--text); }
+code, .mono { font-family: ui-monospace, 'SF Mono', Consolas, monospace; font-size: 12px; }
+.files { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.file { border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; display: grid; gap: 3px; cursor: pointer; }
+.file[aria-current="true"] { border-color: var(--text); }
+.file.invisible { opacity: .6; }
+.file-top { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.file-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; direction: rtl; text-align: left; }
+.file-meta { font-size: 12px; color: var(--muted); }
+.file-meta b { color: var(--text); font-weight: 500; }
+.status { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; white-space: nowrap; background: var(--todo-bg); color: var(--todo); }
+.status.ok { background: var(--ok-bg); color: var(--ok); }
+.status.warn { background: var(--warn-bg); color: var(--warn); }
+.status.err { background: var(--err-bg); color: var(--err); }
+.warn-text { font-size: 12px; color: var(--warn); }
+.copy { border: 0; background: none; color: var(--muted); cursor: pointer; padding: 2px 4px; font: inherit; font-size: 12px; border-radius: 6px; }
+.copy:hover { color: var(--text); background: var(--chip); }
+.share { background: var(--surface); border: 1px dashed var(--line); border-radius: 14px; padding: 20px; max-width: 720px; }
+.hidden { display: none !important; }
+.banner { background: var(--err-bg); color: var(--err); padding: 12px 16px; border-radius: 10px; margin-bottom: 24px; }
+details.unused { margin-top: 48px; color: var(--muted); font-size: 13px; }
+@media (max-width: 760px) {
+  .wrap { padding: 28px 16px 60px; }
+  .bar { margin: 0 -16px 8px; padding: 10px 16px; }
+  .intro { grid-template-columns: 1fr; gap: 20px; }
+  .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="file-banner" class="banner hidden">Ouvre cette page via le serveur local (<code>start.bat</code> puis <code>http://localhost:8090/checklist-visuels.html</code>) : ouverte en double-clic, elle ne peut pas vérifier les fichiers.</div>
+  <header class="intro">
+    <div>
+      <div class="eyebrow">Template NŌTA → ton produit</div>
+      <h1>Checklist des visuels</h1>
+    </div>
+    <ol class="steps">
+      <li><span><b>Prépare ton visuel</b> au même ratio que l'original (dimensions indiquées), même format, fond transparent si c'est précisé.</span></li>
+      <li><span><b>Remplace le fichier</b> dans le dossier du site en gardant exactement le même nom (bouton « copier » pour le chemin).</span></li>
+      <li><span><b>Cette page se recharge toute seule</b> et le fichier passe en « Remplacé ». Un avertissement s'affiche si le ratio ne correspond pas.</span></li>
+    </ol>
+  </header>
+
+  <div class="bar">
+    <div class="progress">
+      <span class="progress-label" id="progress-label">…</span>
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+    <div class="seg" role="group" aria-label="Filtre">
+      <button data-filter="all" aria-pressed="true">Tout</button>
+      <button data-filter="todo" aria-pressed="false">À faire</button>
+      <button data-filter="done" aria-pressed="false">Remplacés</button>
+    </div>
+    <label class="toggle"><input type="checkbox" id="show-hidden"> Copies invisibles</label>
+    <nav class="sections" id="nav"></nav>
+  </div>
+
+  <main id="main"></main>
+  <details class="unused hidden" id="unused"><summary>Fichiers du dossier non utilisés par la page</summary><ul class="mono" id="unused-list"></ul></details>
+</div>
+
+<script>
+const DATA = {"generated":"2026-09-27","sections":[{"key":"accueil","title":"Accueil","desc":"L'écran d'accueil. Sur desktop, le stylo est une animation Lottie pilotée par le scroll ; sur mobile, c'est une image fixe."},{"key":"specs","title":"Spécifications","desc":"La photo verticale du produit au milieu des 3 cartes de specs."},{"key":"who","title":"Who it's for","desc":"La vidéo de la section noire."},{"key":"paper","title":"Paper","desc":"Les visuels plein écran des cartes empilées (desktop) et du slider (mobile)."},{"key":"inside","title":"Inside the box","desc":"Le contenu de la boîte (visuels en fond, changent selon la taille d’écran)."},{"key":"details","title":"Details","desc":"Les gros plans produit + la vidéo. Beaucoup de recadrages différents selon la taille d’écran."},{"key":"colors","title":"Coloris","desc":"Un visuel par coloris du slider (slogan + 4 couleurs). Même image en desktop et mobile."},{"key":"popups","title":"Popup de commande","desc":"Visuel du produit dans la popup « Order », en 3 tailles."},{"key":"logos","title":"Logos & favicon","desc":"Le logo apparaît en SVG dans le header et les boutons."},{"key":"share","title":"Partage (réseaux sociaux)","desc":""},{"key":"hidden","title":"Copies invisibles","desc":"Présentes dans la page mais jamais affichées. Remplace-les quand même pour ne laisser aucune trace de l’ancien produit."}],"cards":[{"section":"accueil","pos":-1,"kind":"lottie","title":"Animation du stylo (Lottie)","alts":[],"files":[{"path":"f/0_refinedcover_03_09.json","bytes":1768198,"sha":"66465e8abedec106b272f8805999581a24a66d6499144c2f9af074cf4c1d085a","format":"Lottie JSON","w":1920,"h":1080,"alpha":true,"frames":76,"fps":15,"usages":[{"kind":"lottie","id":"ikskfddht_0","widths":[1920,1440,1280,1024],"max":[0,0]}]}],"note":"Séquence de 76 images 1920×1080 à 15 images/s, jouée au scroll. Il te faut une séquence de rendus de ton produit (Blender, Spline, vidéo IA…) : on la convertira en Lottie avec un script à la prochaine étape."},{"section":"logos","pos":-0.9975,"kind":"logo","title":"Logo texte (header)","alts":[],"files":[{"path":"content/logo-wordmark.svg","bytes":2754,"sha":"cc8e5e96c2aaa04824b0605cd954f03b0a3f39cd36bdb9cc4919cff9bd7bacf1","format":"SVG","w":71,"h":26,"alpha":true,"vector":true,"usages":[]}],"note":"Injecté dans la page par build.js. Garde un attribut fill=\"…\" sur chaque forme : le site recolore le logo en blanc ou noir selon la section."},{"section":"logos","pos":-0.9974,"kind":"logo","title":"Symbole (boutons Order)","alts":[],"files":[{"path":"content/logo-symbol.svg","bytes":911,"sha":"6961648ba3c2d43694d3c4714af6880cff03141272b83235f8369bb3dc5ea2b7","format":"SVG","w":38,"h":40,"alpha":true,"vector":true,"usages":[]}],"note":"Injecté dans la page par build.js. Même règle : un attribut fill=\"…\" sur chaque forme."},{"section":"logos","pos":-0.9973,"kind":"logo","title":"Favicon (onglet du navigateur)","alts":[],"files":[{"path":"favicon.svg","bytes":952,"sha":"184b6382cd6a88f905a869d56ba6ff77e496625bec7d52fe3b8b7f44d2a3d8a4","format":"SVG","w":48,"h":48,"alpha":true,"vector":true,"usages":[]}],"note":""},{"section":"accueil","pos":0,"title":"Stylo — image fixe (tablette / mobile)","alts":[{"key":"images_alt.hero_mobile","text":"Silver Halo One wireless headphones, side view"}],"files":[{"path":"thumb/2/zOzK4LBsVJn0W98Pf5CalQ/364r1526/d/library_image-14634-symbol-is6ru9kkd-nota_hero_image_adaptive_866220.png","bytes":370640,"sha":"11efc453949e6f0265ab502bac5ed15e76d39fbcfb304f19e4eb051e40e53084","format":"PNG","w":364,"h":1526,"alpha":true,"usages":[{"kind":"img","id":"ibrgj9whz_0","widths":[900,600,375],"max":[176,639],"alt":"images_alt.hero_mobile"}]}]},{"section":"specs","pos":1,"title":"Photo verticale du produit","alts":[{"key":"images_alt.specs_product","text":"Graphite Halo One headphones, side view"}],"files":[{"path":"thumb/2/E_-dKzAg6YZhD4xJJ6rAMA/233r734/d/library_image-14700-symbol-iw3g92519-nota_scene_2_img.png","bytes":89889,"sha":"196743bb9252959dd0288d09b1d107276c3e56e7b85e93a10825c65d9b094f96","format":"PNG","w":233,"h":734,"alpha":true,"usages":[{"kind":"img","id":"i2aatmykv_0","widths":[1920,1440,1280,1024],"max":[203,640],"alt":"images_alt.specs_product"}]},{"path":"thumb/2/DpQxNCkA1E7yEZmCJGLyNA/471r2052/d/library_image-14699-symbol-icoj9ef2j-scene2-adaptive768-ezgifcom-png-to-webp-converter.webp","bytes":88650,"sha":"9894882926ad4d8d5cd4541589cdacdd16d9e1ec2e67fe76ff81081dbb7ec7c7","format":"WebP","w":471,"h":2052,"alpha":false,"usages":[{"kind":"img","id":"igv47q2nv_0","widths":[900],"max":[252,1202],"alt":"images_alt.specs_product"}]},{"path":"thumb/2/xuUeDdKthCFm9DOCDquDXw/896r141/d/library_image-14699-symbol-icoj9ef2j-scene2-adaptive480-ezgifcom-png-to-webp-converter.webp","bytes":19657,"sha":"d13eaf919acda6c585fc5b8b17c7bcb3ce9acc178391a129013a94add94122dc","format":"WebP","w":896,"h":141,"alpha":false,"usages":[{"kind":"img","id":"iofpk87n7_0","widths":[600,375],"max":[545,87],"alt":"images_alt.specs_product"}]}]},{"section":"who","pos":2,"title":"Vidéo de la section","alts":[],"files":[{"path":"f/25824d842058045cd73c3feba327dd09_1920.mp4","bytes":3057902,"sha":"6c1aca957eb6f919e0ff4ace8b63898c3ee1e174b9c3447a76d95e8382f42aad","format":"MP4","w":1920,"h":1080,"alpha":false,"duration":5.1,"usages":[{"kind":"video","id":"ik5hhc3hg_0","widths":[1920,1440,1280,1024],"max":[920,450],"alt":null},{"kind":"video","id":"i94q53ujh_0","widths":[900,600,375],"max":[848,422],"alt":null}]}]},{"section":"paper","pos":3,"title":"Slide 1 — carnet fermé","alts":[{"key":"images_alt.paper_slide1","text":"Halo One headphones folded flat on a dark surface"}],"files":[{"path":"thumb/2/hkWO_0PdjAnQD0OeUgMd8g/1920r1080/d/nota_scene_4_img_01.jpg","bytes":645147,"sha":"7180294507424d705cd5131d653d59d8f16cea50b2caac640e7bc6b892624402","format":"JPG","w":1920,"h":1080,"alpha":false,"usages":[{"kind":"img","id":"iyffo5m7k_0","widths":[1920,1440,1280,1024],"max":[1920,900],"alt":"images_alt.paper_slide1"}]},{"path":"thumb/2/NdNsA4zjgwV803LVWQCIkg/1276r2108/d/41_block.jpg","bytes":356942,"sha":"65d1e93562dea15bfa1405cf3fbeb0ad10247601190ad6aff7cb51d1d09a32f3","format":"JPG","w":926,"h":1234,"alpha":false,"usages":[{"kind":"img","id":"i5h6k41f5_0","widths":[900],"max":[885,900],"alt":"images_alt.paper_slide1"}]},{"path":"thumb/2/Tve6Pa_mEfVFg1C_ZXVEtw/1276r2108/d/41_block_480.jpg","bytes":87019,"sha":"b7930cb985680e5ae3bdf4161df48767ba6d4b4d7ba0a6eca4f3dcac98c27ed2","format":"JPG","w":480,"h":680,"alpha":false,"usages":[{"kind":"img","id":"inn234gqx_0","widths":[600],"max":[585,850],"alt":"images_alt.paper_slide1"}]},{"path":"thumb/2/5UFl0MtPdpTU7FJxOYseJQ/480r1020/d/41_block_mobile_1.jpg","bytes":120267,"sha":"0c5bb92de7c775b4ff55b86d761dbe2d3febb491cb24f1eea817361c38c89510","format":"JPG","w":480,"h":1020,"alpha":false,"usages":[{"kind":"img","id":"itn4cj22c_0","widths":[375],"max":[360,797],"alt":"images_alt.paper_slide1"}]},{"path":"thumb/2/F_P4aLU5KdbclXhQnZ2QpQ/640r480/d/41_block.jpg","bytes":38010,"sha":"5678ea1c6eeaeac4cad911a72da6eb88b070308ffd3fbd04e695ce04acd557ca","format":"JPG","w":360,"h":480,"alpha":false,"usages":[{"kind":"img","id":"ivebn1zu3_0","widths":[],"max":[0,0],"alt":"images_alt.paper_slide1"}]}]},{"section":"paper","pos":4,"title":"Slide 2 — carnet ouvert (motif)","alts":[{"key":"images_alt.paper_slide2","text":"Close-up of the ear cushion and acoustic mesh"}],"files":[{"path":"thumb/2/7YfwgKVakw18X4hnPZia0Q/1920r1080/d/nota_scene_4_img_02.jpg","bytes":678051,"sha":"16eac1907a6af6563640c7be5f45299a094b5431cc2b306411bef0552cdce47c","format":"JPG","w":1920,"h":1080,"alpha":false,"usages":[{"kind":"img","id":"i2e7gdcux_0","widths":[1920,1440,1280,1024],"max":[2688,1260],"alt":"images_alt.paper_slide2"}]},{"path":"thumb/2/V-Pld1tdphvc6bqPvkKsvw/1276r2108/d/42_block.jpg","bytes":677053,"sha":"c54e6149767e314599894ae8f2a5a4ea062de34b5a97120daabc3bd4abed3512","format":"JPG","w":1276,"h":1700,"alpha":false,"usages":[{"kind":"img","id":"i5h6k41f5_1","widths":[900],"max":[885,900],"alt":"images_alt.paper_slide2"}]},{"path":"thumb/2/DsywoH6-Vx8zTSoNO75b-A/1276r2108/d/42_block_480.jpg","bytes":150563,"sha":"749ac701ecbd3c31873595eaf7475d8091099f7f50e1c59beebe61432e3f26d1","format":"JPG","w":480,"h":680,"alpha":false,"usages":[{"kind":"img","id":"inn234gqx_1","widths":[600],"max":[585,850],"alt":"images_alt.paper_slide2"}]},{"path":"thumb/2/thSkq4Kg7lqMfHmr5pPYxQ/480r1020/d/41_block_mobile_2.jpg","bytes":192237,"sha":"9d24fbee6876054c93e1e3d973b997a7aeaf7b13907e5f037bdd00d2ce1e9aad","format":"JPG","w":480,"h":1020,"alpha":false,"usages":[{"kind":"img","id":"itn4cj22c_1","widths":[375],"max":[360,797],"alt":"images_alt.paper_slide2"}]},{"path":"thumb/2/FulYM5xyA7yVsDY4-9XuHQ/640r480/d/42_block.jpg","bytes":41661,"sha":"f41087d51bb4cef43e3643487da1f87d028e9127ebfd6d613d551a647c9525b3","format":"JPG","w":360,"h":480,"alpha":false,"usages":[{"kind":"img","id":"ivebn1zu3_1","widths":[],"max":[0,0],"alt":"images_alt.paper_slide2"}]}]},{"section":"paper","pos":5,"title":"Slide 3 — notes manuscrites","alts":[{"key":"images_alt.paper_slide3","text":"Halo One headphones folded next to the travel case"}],"files":[{"path":"thumb/2/5RXD9D7cr-Ez9A9KxlC5hw/1920r1080/d/nota_scene_4_img_03.jpg","bytes":800494,"sha":"9534f3e7062f41049c725a10c986bd0c683375f8ffc71a01dcd63a08153c15aa","format":"JPG","w":1920,"h":1080,"alpha":false,"usages":[{"kind":"img","id":"iyeibuswj_0","widths":[1920,1440,1280,1024],"max":[2688,1260],"alt":"images_alt.paper_slide3"}]},{"path":"thumb/2/uY0WbSXhbz5r3fxyMekPng/1276r2108/d/43_block.jpg","bytes":766694,"sha":"f98c5bec1ffbdbfc36d642668c1ae21bbeeab0224601bb8f4f29da0b7778345a","format":"JPG","w":1276,"h":1701,"alpha":false,"usages":[{"kind":"img","id":"i5h6k41f5_2","widths":[900],"max":[885,900],"alt":"images_alt.paper_slide3"}]},{"path":"thumb/2/XAWvWz3aFFaaSsy_luH5-w/1276r2108/d/43_block_480.jpg","bytes":144966,"sha":"7327f312c44a05a42a5e52eeaf50e3bae9ea728d269d9e0eb40a7270fce62227","format":"JPG","w":480,"h":680,"alpha":false,"usages":[{"kind":"img","id":"inn234gqx_2","widths":[600],"max":[585,850],"alt":"images_alt.paper_slide3"}]},{"path":"thumb/2/vlxkkI1Wv5e9o1FRJ6IWmA/480r1020/d/41_block_mobile_4.jpg","bytes":179734,"sha":"a70f5ea550455edfb37df1c5e5e4fea88ddc9067de97bc0877d550c2893e6f39","format":"JPG","w":480,"h":1020,"alpha":false,"usages":[{"kind":"img","id":"itn4cj22c_2","widths":[375],"max":[360,797],"alt":"images_alt.paper_slide3"}]},{"path":"thumb/2/lgfT49LtqL0FbROrmSOYew/640r480/d/43_block.jpg","bytes":48162,"sha":"21bc38378f3e958e2e95a08b8605e775ac05addde50d73321001ce08da674321","format":"JPG","w":360,"h":480,"alpha":false,"usages":[{"kind":"img","id":"ivebn1zu3_2","widths":[],"max":[0,0],"alt":"images_alt.paper_slide3"}]}]},{"section":"paper","pos":6,"title":"Slide 4 — téléphone synchronisé","alts":[{"key":"images_alt.paper_slide4","text":"Phone showing the Halo app with a personal sound profile"}],"files":[{"path":"thumb/2/XYdQ9jPC6FwmZfYcoOuhgQ/1920r1080/d/nota_scene_4_img_04.jpg","bytes":656657,"sha":"7513e20d3ab02f118743948c069ba43fa34e4a1a8dfd53ccd39695442df63d0b","format":"JPG","w":1920,"h":1080,"alpha":false,"usages":[{"kind":"img","id":"i0va68q2i_0","widths":[1920,1440,1280,1024],"max":[2688,1260],"alt":"images_alt.paper_slide4"}]},{"path":"thumb/2/ctuI-vbcqn2J7cCUXnBXig/1276r2108/d/41_block1212.png","bytes":1215254,"sha":"792c9e4211c1dfb7cbee8ea2dde73c4e9b786c67e1cc5649d3bc78de9038013d","format":"PNG","w":1276,"h":2108,"alpha":true,"usages":[{"kind":"img","id":"i5h6k41f5_3","widths":[900],"max":[885,900],"alt":"images_alt.paper_slide4"},{"kind":"img","id":"inn234gqx_3","widths":[600],"max":[585,850],"alt":"images_alt.paper_slide4"}]},{"path":"thumb/2/_n2BDCbkxVH2Lw8Lt0bM7g/480r1020/d/41_block_mobile_3.jpg","bytes":126025,"sha":"6f93f7906294f6cbd119e1105173a8972527e45165540363734aee211f85a53b","format":"JPG","w":480,"h":1020,"alpha":false,"usages":[{"kind":"img","id":"itn4cj22c_3","widths":[375],"max":[360,797],"alt":"images_alt.paper_slide4"}]},{"path":"thumb/2/-wr1GZBOmPey4dEvavt0Fw/640r480/d/41_block1212.png","bytes":78056,"sha":"e412960a6660743c65d4343412c76669fd3546b4a0d626ca372bfd5c5f769218","format":"PNG","w":290,"h":480,"alpha":true,"usages":[{"kind":"img","id":"ivebn1zu3_3","widths":[],"max":[0,0],"alt":"images_alt.paper_slide4"}]}]},{"section":"inside","pos":7,"title":"Le coffret ouvert (inside.box)","alts":[],"files":[{"path":"d/library_image-14643-symbol-ispnvazts-nota_scene_5_img1.jpg","bytes":221039,"sha":"a8a011dcb76b6de287f3a9712b0a61f77e5a7edf47994b225093a923b43b722d","format":"JPG","w":1840,"h":1000,"alpha":false,"usages":[{"kind":"bg","id":"ihi4nv6i2_0","widths":[1920,1440],"max":[1840,820],"alt":null}]},{"path":"d/library_image-14643-symbol-ispnvazts-nota_scene_5_img_01_adaptive.jpg","bytes":78573,"sha":"de5017d61593ae994bdbe39546fdd7e76a56d1bac6f1affdef90906a277089ab","format":"JPG","w":952,"h":670,"alpha":false,"usages":[{"kind":"bg","id":"ihi4nv6i2_0","widths":[1280,1024],"max":[1228,848],"alt":null}]},{"path":"d/library_image-14642-symbol-it4oyiz32-nota_scene_5_img_01_adaptive.jpg","bytes":78573,"sha":"de5017d61593ae994bdbe39546fdd7e76a56d1bac6f1affdef90906a277089ab","format":"JPG","w":952,"h":670,"alpha":false,"usages":[{"kind":"bg","id":"i3d9cpjj8_0","widths":[900,600],"max":[848,820],"alt":null}]},{"path":"d/library_image-14642-symbol-it4oyiz32-scene_5_320_smartpaper.jpg","bytes":81487,"sha":"0c812602a20a31eb8c5104fe183dd66f34734788ef2f93e23593335294115672","format":"JPG","w":549,"h":805,"alpha":false,"usages":[{"kind":"bg","id":"i3d9cpjj8_0","widths":[375],"max":[337,516],"alt":null}]},{"path":"d/library_image-14643-symbol-ispnvazts-scene_5_320_smartpaper.jpg","bytes":81487,"sha":"0c812602a20a31eb8c5104fe183dd66f34734788ef2f93e23593335294115672","format":"JPG","w":549,"h":805,"alpha":false,"usages":[{"kind":"bg","id":"ihi4nv6i2_0","widths":[],"max":[0,0],"alt":null}]}]},{"section":"inside","pos":8,"title":"Le stylo (inside.item1)","alts":[],"files":[{"path":"d/library_image-14643-symbol-ispnvazts-nota_scene_5_img_02.jpg","bytes":25884,"sha":"1d97e496ebf8d721f297ae2174a9b7548c502db640e641dc0582ace4a8fb2d16","format":"JPG","w":900,"h":1000,"alpha":false,"usages":[{"kind":"bg","id":"i2xmb33eu_0","widths":[1920,1440,1280,1024],"max":[910,820],"alt":null}]},{"path":"d/library_image-14642-symbol-it4oyiz32-scene_5_768_devise-1.png","bytes":97019,"sha":"d7481cf332a0db96b98ab8fb019d8fb630495bd7b18706b677d55cc91ed84baa","format":"PNG","w":736,"h":630,"alpha":false,"usages":[{"kind":"bg","id":"i93xllkxc_0","widths":[900],"max":[848,738],"alt":null}]},{"path":"d/library_image-14642-symbol-it4oyiz32-scene_5_pen_static_480.png","bytes":37747,"sha":"8ccbc83bc08ad87214113bd053c0e8da1274d4a4b24024f1cb2cf18786d497cb","format":"PNG","w":448,"h":440,"alpha":false,"usages":[{"kind":"bg","id":"i93xllkxc_0","widths":[600],"max":[545,550],"alt":null}]},{"path":"d/library_image-14642-symbol-it4oyiz32-scene_5_pen_static_320.png","bytes":29503,"sha":"8ce1b5a985de9c7ee77748d25be265963f17194fab6269a44b2d2aecd124da91","format":"PNG","w":300,"h":440,"alpha":false,"usages":[{"kind":"bg","id":"i93xllkxc_0","widths":[375],"max":[337,516],"alt":null}]}]},{"section":"inside","pos":9,"title":"L'adaptateur (inside.item2)","alts":[],"files":[{"path":"d/library_image-14643-symbol-ispnvazts-nota_scene_5_img_03.jpg","bytes":85208,"sha":"d6bc418d3b13ae6b980de91128a113f922e43cf653c240589f849f7f2fd72794","format":"JPG","w":900,"h":1000,"alpha":false,"usages":[{"kind":"bg","id":"i2akf28ho_0","widths":[1920,1440,1280,1024],"max":[910,820],"alt":null}]},{"path":"d/library_image-14642-symbol-it4oyiz32-nota_scene_5_img3_768.jpg","bytes":40146,"sha":"0e9bbaaaa5a910254defc36aba5dc03885f113737dae8b767a11f0389bc8bc61","format":"JPG","w":736,"h":630,"alpha":false,"usages":[{"kind":"bg","id":"igacnl13m_0","widths":[900],"max":[848,738],"alt":null}]},{"path":"d/library_image-14642-symbol-it4oyiz32-nota_scene_5_img3_480.jpg","bytes":17681,"sha":"d31dc5e15532f85bfb27d9228ad1a6aceedf618a25fa753ed1768e8ab6037df0","format":"JPG","w":448,"h":440,"alpha":false,"usages":[{"kind":"bg","id":"igacnl13m_0","widths":[600],"max":[545,550],"alt":null}]},{"path":"d/library_image-14642-symbol-it4oyiz32-scene_5_adapter_static_320.png","bytes":45704,"sha":"0a7f8bff251c819e7bea90bcb9b52c6cf6e514eb37dd93e50274888f308fe3d0","format":"PNG","w":300,"h":440,"alpha":false,"usages":[{"kind":"bg","id":"igacnl13m_0","widths":[375],"max":[337,516],"alt":null}]}]},{"section":"inside","pos":10,"title":"Adaptateur — image au survol","alts":[],"files":[{"path":"d/library_image-14643-symbol-ispnvazts-new-scene_5_adapter.jpg","bytes":57926,"sha":"a6edc3633f8c9398f870315831139198a6f4edb5aad507f70cb31b4d24b3a509","format":"JPG","w":900,"h":1000,"alpha":false,"usages":[{"kind":"bg","id":"ibc1svgzy_0","widths":[1920,1440,1280,1024],"max":[910,820],"alt":null}]},{"path":"d/library_image-14642-symbol-it4oyiz32-new-scene_5_adapter.jpg","bytes":57926,"sha":"a6edc3633f8c9398f870315831139198a6f4edb5aad507f70cb31b4d24b3a509","format":"JPG","w":900,"h":1000,"alpha":false,"usages":[{"kind":"bg","id":"igacnl13m_0","widths":[900,600,375],"max":[848,738],"alt":null,"hover":true}]}]},{"section":"details","pos":11,"title":"Gros plan 1","alts":[],"files":[{"path":"d/library_image-14686-symbol-i71z9t68q-nota_scene_6_img_01.jpg","bytes":40848,"sha":"5472799fc8299b38a60905a6843e343a671551383ecdea056c8051b5881a6208","format":"JPG","w":900,"h":787,"alpha":false,"usages":[{"kind":"bg","id":"itz251722_0","widths":[1920,1440],"max":[1196,1023],"alt":null}]},{"path":"d/library_image-14686-symbol-i71z9t68q-scene_6_992_card-1.jpg","bytes":25271,"sha":"cdbcdf26db0ea935d7bd44eb3bf3779fd723149460031638f6f2db6388cc1605","format":"JPG","w":600,"h":712,"alpha":false,"usages":[{"kind":"bg","id":"itz251722_0","widths":[1280,1024],"max":[815,968],"alt":null}]},{"path":"d/library_image-14685-symbol-iag8qchrn-nota_scene_6_img_01.jpg","bytes":40848,"sha":"5472799fc8299b38a60905a6843e343a671551383ecdea056c8051b5881a6208","format":"JPG","w":900,"h":787,"alpha":false,"usages":[{"kind":"bg","id":"ists3j8gk_0","widths":[900],"max":[848,703],"alt":null},{"kind":"bg","id":"i2we3huyf_0","widths":[],"max":[0,0],"alt":null},{"kind":"bg","id":"i67dwgpd0_0","widths":[],"max":[0,0],"alt":null},{"kind":"bg","id":"id49akgir_0","widths":[],"max":[0,0],"alt":null},{"kind":"bg","id":"iba5g0p9y_0","widths":[],"max":[0,0],"alt":null}]},{"path":"d/library_image-14685-symbol-iag8qchrn-scene_6_480_card-1.png","bytes":108696,"sha":"9c9ce0b628706bee29c21823e04a0dfb7dfb3c4ed198b7f75fb33b7e920130d1","format":"PNG","w":655,"h":468,"alpha":true,"usages":[{"kind":"bg","id":"ists3j8gk_0","widths":[600],"max":[545,400],"alt":null}]},{"path":"d/library_image-14685-symbol-iag8qchrn-scene_6_320_card-1.png","bytes":81926,"sha":"1e657b967de49011d951d97d86b55e784c3e324dfff99b07700e71f708cf45bd","format":"PNG","w":458,"h":488,"alpha":true,"usages":[{"kind":"bg","id":"ists3j8gk_0","widths":[375],"max":[337,375],"alt":null}]},{"path":"d/library_image-14685-symbol-iag8qchrn-scene_6_992_card-1.jpg","bytes":25271,"sha":"cdbcdf26db0ea935d7bd44eb3bf3779fd723149460031638f6f2db6388cc1605","format":"JPG","w":600,"h":712,"alpha":false,"usages":[{"kind":"bg","id":"i2we3huyf_0","widths":[],"max":[0,0],"alt":null},{"kind":"bg","id":"i67dwgpd0_0","widths":[],"max":[0,0],"alt":null},{"kind":"bg","id":"id49akgir_0","widths":[],"max":[0,0],"alt":null},{"kind":"bg","id":"iba5g0p9y_0","widths":[],"max":[0,0],"alt":null}]}]},{"section":"details","pos":12,"title":"Gros plan 2","alts":[],"files":[{"path":"d/library_image-14686-symbol-i71z9t68q-nota_scene_6_img_02.jpg","bytes":87439,"sha":"3c085c47d35e5f23f3bdf9a0f2b574fd5350a8445d912a3ac94a86feeeb4e7bb","format":"JPG","w":900,"h":1200,"alpha":false,"usages":[{"kind":"bg","id":"iwwfiweuo_0","widths":[1920,1440,1280,1024],"max":[1170,1560],"alt":null}]},{"path":"d/library_image-14685-symbol-iag8qchrn-nota_scene_6_img_02.jpg","bytes":87439,"sha":"3c085c47d35e5f23f3bdf9a0f2b574fd5350a8445d912a3ac94a86feeeb4e7bb","format":"JPG","w":900,"h":1200,"alpha":false,"usages":[{"kind":"bg","id":"i2we3huyf_0","widths":[900],"max":[848,1137],"alt":null}]},{"path":"d/library_image-14685-symbol-iag8qchrn-scene_6_480_card-2.png","bytes":395574,"sha":"a1966d8698b0085e5a6b5d81869fcdcb959b2450599176abbb22bb23deb98c97","format":"PNG","w":655,"h":731,"alpha":true,"usages":[{"kind":"bg","id":"i2we3huyf_0","widths":[600],"max":[545,625],"alt":null}]},{"path":"d/library_image-14685-symbol-iag8qchrn-scene_6_320_card-2.png","bytes":294548,"sha":"a27ef7105bb0e935a8825819945cc3837a70a1d8bee5358e47b4064b7c6d0a20","format":"PNG","w":458,"h":763,"alpha":true,"usages":[{"kind":"bg","id":"i2we3huyf_0","widths":[375],"max":[337,586],"alt":null}]}]},{"section":"details","pos":13,"title":"Gros plan 3","alts":[],"files":[{"path":"d/library_image-14686-symbol-i71z9t68q-nota_scene_6_img_03.jpg","bytes":20926,"sha":"7e038fac15873c1170fb2ebc11207130e476cdb614fa80d4f959ae1cb2b7457c","format":"JPG","w":450,"h":373,"alpha":false,"usages":[{"kind":"bg","id":"iywzagw5d_0","widths":[1920,1440,1280,1024],"max":[585,511],"alt":null}]},{"path":"d/library_image-14685-symbol-iag8qchrn-scene_6_768_card-3.png","bytes":319493,"sha":"14ae0ae99cb5537b16f8bf762c1c87751a2ad14b7a2850440709c522d5cff4b7","format":"PNG","w":1225,"h":833,"alpha":false,"usages":[{"kind":"bg","id":"i67dwgpd0_0","widths":[900,600,375],"max":[848,586],"alt":null}]}]},{"section":"details","pos":14,"title":"Gros plan 4","alts":[],"files":[{"path":"d/library_image-14686-symbol-i71z9t68q-nota_scene_6_img_05.jpg","bytes":68049,"sha":"6805fff0baedd8cb9d0250dc4e2da0a4303ef4970db541a29a68902fea07c0e1","format":"JPG","w":1370,"h":900,"alpha":false,"usages":[{"kind":"bg","id":"icegagtko_0","widths":[1920],"max":[1781,1170],"alt":null}]},{"path":"d/library_image-14686-symbol-i71z9t68q-scene_6_1440_card_5.png","bytes":619152,"sha":"5837cf88c2fd6f2e6ec2d37bbcc5b8937eb30061015e4e84e397535d3983ec31","format":"PNG","w":1223,"h":804,"alpha":false,"usages":[{"kind":"bg","id":"icegagtko_0","widths":[1440],"max":[1313,863],"alt":null}]},{"path":"d/library_image-14686-symbol-i71z9t68q-scene_6_992_card-5.jpg","bytes":23450,"sha":"b79533a129170858dfc36921b8a5ca6044fef871a4f66dfea6dedd6be4b6af6e","format":"JPG","w":709,"h":664,"alpha":false,"usages":[{"kind":"bg","id":"icegagtko_0","widths":[1280,1024],"max":[1189,1114],"alt":null}]},{"path":"d/library_image-14685-symbol-iag8qchrn-scene_6_768_card-5.png","bytes":713804,"sha":"9352041c5c0ce80f6cde452acef1b4006373cb6dc052ea53bd6dcc0c7884e6ce","format":"PNG","w":1226,"h":999,"alpha":false,"usages":[{"kind":"bg","id":"id49akgir_0","widths":[900],"max":[848,703],"alt":null}]},{"path":"d/library_image-14685-symbol-iag8qchrn-scene_6_480_card-5.png","bytes":268534,"sha":"cd14095705a1a8b7e1c774b85414a696da9002a1fec791f27ed5eb478b4ee7e3","format":"PNG","w":752,"h":537,"alpha":false,"usages":[{"kind":"bg","id":"id49akgir_0","widths":[600],"max":[545,400],"alt":null}]},{"path":"d/library_image-14685-symbol-iag8qchrn-scene_6_320_card-5.png","bytes":162847,"sha":"49ac527d43ac5891509e38d16110f278df9e19cb5f58c832983158684ea38f6c","format":"PNG","w":458,"h":488,"alpha":false,"usages":[{"kind":"bg","id":"id49akgir_0","widths":[375],"max":[337,375],"alt":null}]}]},{"section":"details","pos":15,"title":"Gros plan 5","alts":[],"files":[{"path":"d/library_image-14686-symbol-i71z9t68q-nota_scene_6_img_06.jpg","bytes":31589,"sha":"86e73746bef65d637b27f562fe25977897aa0a4ca687f5c6def4e821b3e80846","format":"JPG","w":430,"h":600,"alpha":false,"usages":[{"kind":"bg","id":"ig4bod1u2_0","widths":[1920,1440,1280,1024],"max":[585,780],"alt":null}]},{"path":"d/library_image-14685-symbol-iag8qchrn-scene_6_768_card-6.png","bytes":513267,"sha":"c96eeeb8c0c5eafeecb6da29d854b5a423b482c3afeaa4a6afec86d9d9fafebb","format":"PNG","w":1226,"h":833,"alpha":false,"usages":[{"kind":"bg","id":"iba5g0p9y_0","widths":[900,600],"max":[848,586],"alt":null}]},{"path":"d/library_image-14685-symbol-iag8qchrn-scene_6_320_card-6.png","bytes":282287,"sha":"495f1fa98e407557b223c3cb236bb95fd9c2d130181f45ea8d38d31ea1ff25b6","format":"PNG","w":571,"h":476,"alpha":false,"usages":[{"kind":"bg","id":"iba5g0p9y_0","widths":[375],"max":[337,293],"alt":null}]}]},{"section":"details","pos":16,"title":"Vidéo des gros plans","alts":[],"files":[{"path":"f/7b66fa812d04f9c7075f91ef42d4dd53_1920.mp4","bytes":3275760,"sha":"2b8fcd347471e34d3194ec2f24215580ec830475692b106f880e52144409e97e","format":"MP4","w":1920,"h":1080,"alpha":false,"duration":5.2,"usages":[{"kind":"video","id":"i5q39xkfn_0","widths":[1920,1440,1280,1024],"max":[1840,860],"alt":null},{"kind":"video","id":"izt2oeojl_0","widths":[900,600,375],"max":[848,1137],"alt":null}]}]},{"section":"colors","pos":17,"title":"Slide 1 — slogan (stylo argent)","alts":[{"key":"images_alt.colors_slogan","text":"Silver Halo One headphones"}],"files":[{"path":"thumb/2/s3CSLofcpmb3mJNh_0AxHg/1920r1080/d/library_image-14782-symbol-icmdrs40h-nota_scene_7_img_01.jpg","bytes":78967,"sha":"2d8af1f941771207e7b78352b6ceea13454ee470dd5c001f84253559ac06e575","format":"JPG","w":1920,"h":1080,"alpha":false,"usages":[{"kind":"img","id":"iqikcd8xb_0","widths":[1920,1440,1280,1024],"max":[1920,900],"alt":"images_alt.colors_slogan"}]},{"path":"thumb/2/1SLA07O2y250d4sm92qnPg/1920r1080/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_01.jpg","bytes":78967,"sha":"2d8af1f941771207e7b78352b6ceea13454ee470dd5c001f84253559ac06e575","format":"JPG","w":1920,"h":1080,"alpha":false,"usages":[{"kind":"img","id":"i0udvdo0v_0","widths":[900,600,375],"max":[885,900],"alt":"images_alt.colors_slogan"}]},{"path":"thumb/2/ciZeEz-h5_evM5-gO1f6Eg/640r480/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_01.jpg","bytes":15958,"sha":"51082e2dd461c0b3f97b28820739d09e6b1c775e0d598f271fbdddea61af4ed8","format":"JPG","w":640,"h":360,"alpha":false,"usages":[{"kind":"img","id":"i5h78o1x9_0","widths":[],"max":[0,0],"alt":"images_alt.colors_slogan"}]}]},{"section":"colors","pos":18,"title":"Slide 2 — colors.color1 (stylo noir)","alts":[{"key":"images_alt.colors_color1","text":"Graphite Black Halo One headphones"}],"files":[{"path":"thumb/2/57-AneXzVvhacM8Plv-mCA/1920r1080/d/library_image-14782-symbol-icmdrs40h-nota_scene_7_img_02.jpg","bytes":125930,"sha":"f6e10b6162c4c4a13b545b32d8c014f1ffe3202f852edf3269a5666e26120611","format":"JPG","w":1920,"h":1080,"alpha":false,"usages":[{"kind":"img","id":"i6qd50zxn_0","widths":[1920,1440,1280,1024],"max":[1920,900],"alt":"images_alt.colors_color1"}]},{"path":"thumb/2/TYFFgx_5tk3Z54ItqSDO4w/1920r1080/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_02.jpg","bytes":125930,"sha":"f6e10b6162c4c4a13b545b32d8c014f1ffe3202f852edf3269a5666e26120611","format":"JPG","w":1920,"h":1080,"alpha":false,"usages":[{"kind":"img","id":"iw31d5gy6_0","widths":[900,600,375],"max":[885,900],"alt":"images_alt.colors_color1"}]},{"path":"thumb/2/Wqh87Gl2CN8OVFAfRap5yA/640r480/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_02.jpg","bytes":20693,"sha":"f03e8527b4070e3d7f05019c86a58a4c9871aa68f88f3c82d53f69c1733dbfce","format":"JPG","w":640,"h":360,"alpha":false,"usages":[{"kind":"img","id":"iftmyuoz9_0","widths":[],"max":[0,0],"alt":"images_alt.colors_color1"}]}]},{"section":"colors","pos":19,"title":"Slide 3 — colors.color2 (stylo bleu)","alts":[{"key":"images_alt.colors_color2","text":"Mist Blue Halo One headphones"}],"files":[{"path":"thumb/2/rsmkTaYuQrbSkzUYU_iQWg/1920r1080/d/library_image-14782-symbol-icmdrs40h-nota_scene_7_img_03.jpg","bytes":116757,"sha":"19545a44214bf4f47440061623bb771d9c0a60fc4ab87126e3f6d7adcd567457","format":"JPG","w":1920,"h":1080,"alpha":false,"usages":[{"kind":"img","id":"iqifg9qnc_0","widths":[1920,1440,1280,1024],"max":[1920,900],"alt":"images_alt.colors_color2"}]},{"path":"thumb/2/WoVgGWdUhndJDCN4Hp4Y4w/1920r1080/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_03.jpg","bytes":116757,"sha":"19545a44214bf4f47440061623bb771d9c0a60fc4ab87126e3f6d7adcd567457","format":"JPG","w":1920,"h":1080,"alpha":false,"usages":[{"kind":"img","id":"i1yt3v9nr_0","widths":[900,600,375],"max":[885,900],"alt":"images_alt.colors_color2"}]},{"path":"thumb/2/6OMVYVgdmKC7DNiM4U6VQA/640r480/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_03.jpg","bytes":24396,"sha":"f1b23979eee9d28f18c43d8f019d221b9bfa7ffdd2fccc86e05c48d79b4a53dc","format":"JPG","w":640,"h":360,"alpha":false,"usages":[{"kind":"img","id":"ip9d769zz_0","widths":[],"max":[0,0],"alt":"images_alt.colors_color2"}]}]},{"section":"colors","pos":20,"title":"Slide 4 — colors.color3 (stylo rouge)","alts":[{"key":"images_alt.colors_color3","text":"Precision Red Halo One headphones"}],"files":[{"path":"thumb/2/nTFFf7KN2tETtuSq70lj1Q/1920r1080/d/library_image-14782-symbol-icmdrs40h-nota_scene_7_img_04.jpg","bytes":119256,"sha":"7b4911fa61d1293de275c9298e0b59b59a0a917435515b5a472a4c4c27ca9901","format":"JPG","w":1920,"h":1080,"alpha":false,"usages":[{"kind":"img","id":"igrnroo20_0","widths":[1920,1440,1280,1024],"max":[1920,900],"alt":"images_alt.colors_color3"}]},{"path":"thumb/2/p8a6t6D7aO3tSc3x4pW7nw/1920r1080/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_04.jpg","bytes":119256,"sha":"7b4911fa61d1293de275c9298e0b59b59a0a917435515b5a472a4c4c27ca9901","format":"JPG","w":1920,"h":1080,"alpha":false,"usages":[{"kind":"img","id":"itq0dmcbv_0","widths":[900,600,375],"max":[885,900],"alt":"images_alt.colors_color3"}]},{"path":"thumb/2/0-g6exQXkmwgv8_CQyqdCQ/640r480/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_04.jpg","bytes":24720,"sha":"2177a4a60092062c043de294549ce4146392d3cf0f9ddaa4f09eb43aaca39baf","format":"JPG","w":640,"h":360,"alpha":false,"usages":[{"kind":"img","id":"i7q7urt1f_0","widths":[],"max":[0,0],"alt":"images_alt.colors_color3"}]}]},{"section":"colors","pos":21,"title":"Slide 5 — colors.color4 (stylo orange)","alts":[{"key":"images_alt.colors_color4","text":"Bright Orange Halo One headphones"}],"files":[{"path":"thumb/2/frnjDUP5_aZbwYf4snvBAw/1920r1080/d/library_image-14782-symbol-icmdrs40h-nota_scene_7_img_05.jpg","bytes":160692,"sha":"21a28b2856abbd630bf36386af5c43313f4bb8a708944f1666d458d2627d3d37","format":"JPG","w":1920,"h":1080,"alpha":false,"usages":[{"kind":"img","id":"ivk1zk7bz_0","widths":[1920,1440,1280,1024],"max":[1920,900],"alt":"images_alt.colors_color4"}]},{"path":"thumb/2/XcxX2unL4tshlrNkYB4sRg/1920r1080/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_05.jpg","bytes":160692,"sha":"21a28b2856abbd630bf36386af5c43313f4bb8a708944f1666d458d2627d3d37","format":"JPG","w":1920,"h":1080,"alpha":false,"usages":[{"kind":"img","id":"igapw813c_0","widths":[900,600,375],"max":[885,900],"alt":"images_alt.colors_color4"}]},{"path":"thumb/2/FzvL-ikeG_QJvupknDRhww/640r480/d/library_image-14781-symbol-i64njjjjo-nota_scene_7_img_05.jpg","bytes":27731,"sha":"9a85a01a04d8e7b7d4611467c20bfa81c2460b031c6681ca856e7e1ec7fe7fff","format":"JPG","w":640,"h":360,"alpha":false,"usages":[{"kind":"img","id":"isavj8yno_0","widths":[],"max":[0,0],"alt":"images_alt.colors_color4"}]}]},{"section":"popups","pos":22,"title":"Produit dans la popup « Order »","alts":[{"key":"images_alt.order_popup","text":"Halo One wireless headphones in Mist Blue"}],"files":[{"path":"thumb/2/48v7oqZUAYG0LHOJ-CgFqA/1472r1008/d/library_image-14639-symbol-ibp1e2m59-popup_order-img.png","bytes":481491,"sha":"7c06c0cdf8c48b7571cee5b180d8f0f5f9e724cbf5c5e3175a0dbd74de90c8da","format":"PNG","w":1472,"h":1008,"alpha":true,"usages":[{"kind":"img","id":"io13f18ks_0","widths":[900],"max":[848,443],"alt":"images_alt.order_popup"}]},{"path":"thumb/2/89XFsBtyOJQj6l1MDE9mcA/896r578/d/library_image-14639-symbol-ibp1e2m59-popup_order-img480.png","bytes":478215,"sha":"0dd53d043ecdd1b99ea546211c5e5005745d8bf843ee3f6baf9866639746ae53","format":"PNG","w":896,"h":578,"alpha":true,"usages":[{"kind":"img","id":"igf6l9rw1_0","widths":[600],"max":[545,329],"alt":"images_alt.order_popup"}]},{"path":"thumb/2/23v_cjk1hEG0m1FgxLR3Qg/600r590/d/library_image-14639-symbol-ibp1e2m59-popup_order-img320.png","bytes":266541,"sha":"d6e95af4668bb8149271d6bdf4f1f7cccddb92674ff63eb19e41e43daefc0610","format":"PNG","w":600,"h":590,"alpha":true,"usages":[{"kind":"img","id":"ic1pethtz_0","widths":[375],"max":[337,309],"alt":"images_alt.order_popup"}]}]},{"section":"logos","pos":1000000,"title":"Symbole (bouton Order, en image)","alts":[{"key":"images_alt.logo","text":"Halo"}],"files":[{"path":"thumb/2/GHsyb1KhYB2zpeQZqk1haQ/640r480/d/library_image-14633-symbol-i0odde8nz-logo.svg","bytes":906,"sha":"b2f06979d411419a13df6b3e841d89d2deab7b57ec71c86a3f3a80d10fc61397","format":"SVG","w":38,"h":40,"alpha":true,"vector":true,"usages":[{"kind":"img","id":"iizle9q6u_0","widths":[1920,1440,1280,1024],"max":[49,52],"alt":"images_alt.logo"}]}],"kind":"logo"}],"unreferenced":[]};
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const store = {
+  get(k, d) { try { const v = localStorage.getItem('checklist:' + k); return v === null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem('checklist:' + k, JSON.stringify(v)); } catch {} },
+};
+const BANDS = { 1920: [1920, Infinity], 1440: [1440, 1919], 1280: [1280, 1439], 1024: [992, 1279], 900: [768, 991], 600: [480, 767], 375: [0, 479] };
+function bandLabel(widths) {
+  const merged = [];
+  for (const r of widths.map(w => BANDS[w]).sort((a, b) => a[0] - b[0])) {
+    const last = merged[merged.length - 1];
+    if (last && last[1] + 1 >= r[0]) last[1] = Math.max(last[1], r[1]); else merged.push([...r]);
+  }
+  return merged.map(([lo, hi]) => (hi === Infinity ? (lo === 0 ? 'toutes tailles' : `≥ ${lo} px`) : lo === 0 ? `< ${hi + 1} px` : `${lo}–${hi} px`)).join(', ');
+}
+function deviceLabel(widths) {
+  const d = widths.some(w => w >= 1024), m = widths.some(w => w < 1024);
+  return d && m ? 'Desktop + mobile' : d ? 'Desktop' : m ? 'Tablette / mobile' : 'Invisible';
+}
+const RATIOS = [[16, 9], [9, 16], [4, 3], [3, 4], [3, 2], [2, 3], [1, 1], [21, 9], [4, 5], [5, 4]];
+function ratioLabel(w, h) {
+  const r = w / h;
+  const hit = RATIOS.find(([a, b]) => Math.abs(a / b - r) / r < 0.01);
+  return hit ? `${hit[0]}:${hit[1]}` : `${r.toFixed(2).replace('.', ',')}:1`;
+}
+const fmtBytes = b => (b >= 1e6 ? (b / 1e6).toFixed(1).replace('.', ',') + ' Mo' : Math.max(1, Math.round(b / 1e3)) + ' Ko');
+const dims = f => (f.w && f.h ? `${Math.round(f.w)} × ${Math.round(f.h)}` : '?');
+const visibleWidths = f => [...new Set(f.usages.flatMap(u => u.widths))];
+const isInvisible = f => !f.usages.length ? false : visibleWidths(f).length === 0 && !f.usages.some(u => u.hover);
+const BUST = Date.now();
+const src = f => `${f.path}?v=${BUST}`;
+
+// ---------- checks ----------
+async function sha256(buf) {
+  const h = await crypto.subtle.digest('SHA-256', buf);
+  return [...new Uint8Array(h)].map(b => b.toString(16).padStart(2, '0')).join('');
+}
+async function measure(f, buf) {
+  if (f.format === 'SVG') {
+    const s = new TextDecoder().decode(buf);
+    const vb = s.match(/viewBox="([^"]+)"/i);
+    const p = vb ? vb[1].trim().split(/[\s,]+/).map(Number) : [];
+    const fills = [...s.matchAll(/\bfill="([^"]*)"/g)].map(m => m[1]).filter(v => v !== 'none');
+    return { w: p[2], h: p[3], noFill: fills.length === 0 };
+  }
+  if (f.format === 'Lottie JSON') { const j = JSON.parse(new TextDecoder().decode(buf)); return { w: j.w, h: j.h, frames: j.op - j.ip }; }
+  if (f.format !== 'MP4') {
+    // createImageBitmap also decodes in background tabs (img.decode() waits for the tab to be visible)
+    const bmp = await createImageBitmap(new Blob([buf]));
+    const size = { w: bmp.width, h: bmp.height };
+    bmp.close();
+    return size;
+  }
+  const url = URL.createObjectURL(new Blob([buf]));
+  try {
+    if (f.format === 'MP4') {
+      const v = document.createElement('video');
+      v.muted = true; v.preload = 'metadata'; v.src = url;
+      await new Promise((ok, ko) => { v.onloadedmetadata = ok; v.onerror = ko; });
+      return { w: v.videoWidth, h: v.videoHeight, duration: v.duration };
+    }
+    const img = new Image();
+    img.src = url;
+    await img.decode();
+    return { w: img.naturalWidth, h: img.naturalHeight };
+  } finally { URL.revokeObjectURL(url); }
+}
+async function check(f) {
+  try {
+    const res = await fetch(`${f.path}?check=${BUST}`, { cache: 'no-store' });
+    if (!res.ok) return { state: 'err', label: 'Introuvable', warn: 'Fichier absent : vérifie le nom exact.' };
+    const buf = await res.arrayBuffer();
+    if ((await sha256(buf)) === f.sha) return { state: 'todo', label: 'Original' };
+    const m = await measure(f, buf).catch(() => null);
+    if (!m) return { state: 'warn', label: 'Illisible', warn: `Le navigateur n'arrive pas à lire ce fichier : il doit rester au format ${f.format}.` };
+    const warns = [];
+    if (m.w && f.w && Math.abs(m.w / m.h - f.w / f.h) / (f.w / f.h) > 0.02) warns.push(`Ratio ${ratioLabel(m.w, m.h)} (${Math.round(m.w)} × ${Math.round(m.h)}) au lieu de ${ratioLabel(f.w, f.h)} : l'image risque d'être recadrée.`);
+    if (m.noFill) warns.push('Aucun attribut fill="…" : le logo ne changera plus de couleur selon la section.');
+    return { state: warns.length ? 'warn' : 'ok', label: 'Remplacé', warn: warns.join(' '), now: m };
+  } catch (e) {
+    return { state: 'err', label: 'Erreur', warn: String(e.message || e) };
+  }
+}
+
+// ---------- render ----------
+const main = document.getElementById('main');
+const results = new Map();
+let filter = store.get('filter', 'all');
+let showHidden = store.get('hidden', false);
+
+function previewHtml(card, f) {
+  const cls = ['preview', card.kind === 'logo' ? 'logo' : f.alpha ? 'alpha' : ''].join(' ');
+  let inner;
+  if (f.format === 'MP4') inner = `<video src="${esc(src(f))}" muted loop playsinline preload="metadata"></video>`;
+  else if (f.format === 'Lottie JSON') inner = `<img data-lottie="${esc(f.path)}" alt="">`;
+  else inner = `<img src="${esc(src(f))}" alt="" loading="lazy">`;
+  const tag = f.format === 'MP4' ? `<span class="tag">Vidéo${f.duration ? ' · ' + String(f.duration).replace('.', ',') + ' s' : ''}</span>`
+    : f.format === 'Lottie JSON' ? `<span class="tag">Lottie · ${f.frames} images</span>` : '';
+  return `<div class="${cls}">${inner}${tag}</div>`;
+}
+
+function fileHtml(f, i, current) {
+  const w = visibleWidths(f);
+  const hover = f.usages.some(u => u.hover);
+  const max = f.usages.reduce((m, u) => (u.max && u.max[0] > m[0] ? u.max : m), [0, 0]);
+  const where = !f.usages.length ? 'toutes tailles d’écran' : isInvisible(f) ? 'copie invisible (jamais affichée)'
+    : `${deviceLabel(w)} · ${bandLabel(w)}${hover ? ' · au survol' : ''}${max[0] ? ` · affiché jusqu'à ${max[0]} × ${max[1]}` : ''}`;
+  const extra = [f.format, fmtBytes(f.bytes), f.alpha && !f.vector && f.format !== 'Lottie JSON' ? 'fond transparent' : '', f.duration ? String(f.duration).replace('.', ',') + ' s' : '', f.frames ? `${f.frames} images à ${f.fps} i/s` : ''].filter(Boolean).join(' · ');
+  return `<li class="file${isInvisible(f) ? ' invisible' : ''}" data-i="${i}" aria-current="${current}" title="${esc(f.path)}">
+    <div class="file-top"><span class="status" data-status>…</span><span class="file-name mono">${esc(f.path)}</span><button class="copy" data-copy="${esc(f.path.replace(/\//g, '\\'))}" title="Copier le chemin">copier</button></div>
+    <div class="file-meta"><b>${dims(f)}</b>${f.w ? ` (${ratioLabel(f.w, f.h)})` : ''} · ${esc(extra)}</div>
+    <div class="file-meta">${esc(where)}</div>
+    <div class="warn-text hidden" data-warn></div>
+  </li>`;
+}
+
+function cardTitle(card, n, section) {
+  if (card.title) return card.title;
+  return `${section.title} · visuel ${n}`;
+}
+
+function render() {
+  const bySection = {};
+  DATA.cards.forEach(c => (bySection[c.section] ??= []).push(c));
+  let out = '';
+  for (const s of DATA.sections) {
+    if (s.key === 'share') {
+      out += `<section class="group" id="s-share" data-section="share"><div class="group-head"><h2>${esc(s.title)}</h2></div>
+        <div class="share"><p class="note" style="margin-top:0">L'image d'aperçu quand on partage le lien (WhatsApp, LinkedIn, Slack…) n'est pas dans le dossier : elle pointe encore vers le site d'origine.</p>
+        <p class="note">Crée <code>og-image.jpg</code> en <b>1200 × 630</b>, mets-la à la racine du site, puis dans <code>content/content.json</code> remplace <code>meta.image</code> par son adresse finale (ex. <code>https://ton-site.com/og-image.jpg</code>) et <code>meta.url</code> par l'adresse du site.</p></div></section>`;
+      continue;
+    }
+    const cards = bySection[s.key];
+    if (!cards) continue;
+    out += `<section class="group" id="s-${s.key}" data-section="${s.key}"><div class="group-head"><h2>${esc(s.title)}</h2></div>`;
+    if (s.desc) out += `<p class="group-desc">${esc(s.desc)}</p>`;
+    out += '<div class="grid">';
+    cards.forEach((c, n) => {
+      const firstVisible = c.files.findIndex(f => !isInvisible(f));
+      const cur = Math.max(0, firstVisible);
+      const nf = c.files.filter(f => !isInvisible(f)).length;
+      const badges = [nf > 1 ? `${nf} fichiers` : '', ...new Set(c.files.filter(f => f.usages.length && !isInvisible(f)).map(f => deviceLabel(visibleWidths(f))))].filter(Boolean);
+      out += `<article class="card" data-card="${DATA.cards.indexOf(c)}">
+        ${previewHtml(c, c.files[cur])}
+        <div class="body">
+          <div class="title-row"><h3>${esc(cardTitle(c, n + 1, s))}</h3><div class="badges">${badges.map(b => `<span class="badge">${esc(b)}</span>`).join('')}</div></div>
+          ${c.note ? `<p class="note">${esc(c.note)}</p>` : ''}
+          ${c.alts.length ? `<div class="alt">Description (alt) : ${c.alts.map(a => `<code>${esc(a.key)}</code> « ${esc(a.text)} »`).join(', ')}</div>` : ''}
+          <ul class="files">${c.files.map((f, i) => fileHtml(f, i, i === cur)).join('')}</ul>
+        </div></article>`;
+    });
+    out += '</div></section>';
+  }
+  main.innerHTML = out;
+  if (DATA.unreferenced.length) {
+    document.getElementById('unused').classList.remove('hidden');
+    document.getElementById('unused-list').innerHTML = DATA.unreferenced.map(p => `<li>${esc(p)}</li>`).join('');
+  }
+  loadLottiePreviews();
+}
+
+async function loadLottiePreviews() {
+  for (const img of document.querySelectorAll('img[data-lottie]')) {
+    try {
+      const j = await (await fetch(`${img.dataset.lottie}?v=${BUST}`, { cache: 'no-store' })).json();
+      const frames = (j.assets || []).filter(a => typeof a.p === 'string' && a.p.startsWith('data:'));
+      if (frames.length) img.src = frames[Math.floor(frames.length * 0.7)].p;
+    } catch {}
+  }
+}
+
+function applyFilters() {
+  const counted = [];
+  document.querySelectorAll('.card').forEach(el => {
+    const card = DATA.cards[el.dataset.card];
+    const hiddenCard = card.section === 'hidden';
+    const states = card.files.map((f, i) => ({ f, i, r: results.get(f.path) })).filter(x => showHidden || !isInvisible(x.f));
+    el.querySelectorAll('.file').forEach(li => li.classList.toggle('hidden', !showHidden && isInvisible(card.files[li.dataset.i])));
+    const done = states.length > 0 && states.every(x => x.r && x.r.state !== 'todo' && x.r.state !== 'err');
+    el.classList.toggle('is-done', done);
+    const visibleByFilter = filter === 'all' || (filter === 'done') === done;
+    el.classList.toggle('hidden', !visibleByFilter || (hiddenCard && !showHidden));
+    if (!hiddenCard || showHidden) states.forEach(x => counted.push(x));
+  });
+  document.querySelectorAll('section.group').forEach(sec => {
+    const any = sec.dataset.section === 'share' ? filter !== 'done' : sec.querySelector('.card:not(.hidden)');
+    sec.classList.toggle('hidden', !any);
+  });
+  const uniq = new Map(counted.map(x => [x.f.path, x.r]));
+  const total = uniq.size, done = [...uniq.values()].filter(r => r && r.state !== 'todo' && r.state !== 'err').length;
+  document.getElementById('progress-label').textContent = `${done} / ${total} fichiers remplacés`;
+  document.getElementById('progress-fill').style.width = total ? `${(done / total) * 100}%` : '0';
+  renderNav();
+}
+
+function renderNav() {
+  const nav = document.getElementById('nav');
+  nav.innerHTML = DATA.sections.filter(s => s.key !== 'share' && document.querySelector(`#s-${s.key}:not(.hidden)`)).map(s => {
+    const files = DATA.cards.filter(c => c.section === s.key).flatMap(c => c.files).filter(f => showHidden || !isInvisible(f));
+    const paths = [...new Set(files.map(f => f.path))];
+    const done = paths.filter(p => { const r = results.get(p); return r && r.state !== 'todo' && r.state !== 'err'; }).length;
+    return `<a href="#s-${s.key}" class="${done === paths.length && paths.length ? 'done' : ''}">${esc(s.title)}<span class="n">${done}/${paths.length}</span></a>`;
+  }).join('');
+}
+
+async function runChecks() {
+  const all = [...new Map(DATA.cards.flatMap(c => c.files).map(f => [f.path, f])).values()];
+  await Promise.all(all.map(async f => {
+    const r = await check(f);
+    results.set(f.path, r);
+    document.querySelectorAll(`.file[title="${CSS.escape(f.path)}"]`).forEach(li => {
+      const st = li.querySelector('[data-status]');
+      st.textContent = r.label;
+      st.className = 'status ' + (r.state === 'todo' ? '' : r.state);
+      const w = li.querySelector('[data-warn]');
+      w.textContent = r.warn || '';
+      w.classList.toggle('hidden', !r.warn);
+    });
+  }));
+  applyFilters();
+}
+
+document.addEventListener('click', e => {
+  const copy = e.target.closest('[data-copy]');
+  if (copy) {
+    e.stopPropagation();
+    navigator.clipboard?.writeText(copy.dataset.copy).then(() => { copy.textContent = 'copié'; setTimeout(() => (copy.textContent = 'copier'), 1200); });
+    return;
+  }
+  const li = e.target.closest('.file');
+  if (li) {
+    const cardEl = li.closest('.card');
+    const card = DATA.cards[cardEl.dataset.card];
+    cardEl.querySelector('.preview').outerHTML = previewHtml(card, card.files[li.dataset.i]);
+    cardEl.querySelectorAll('.file').forEach(x => x.setAttribute('aria-current', String(x === li)));
+    loadLottiePreviews();
+  }
+  const btn = e.target.closest('[data-filter]');
+  if (btn) {
+    filter = btn.dataset.filter;
+    store.set('filter', filter);
+    document.querySelectorAll('[data-filter]').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+    applyFilters();
+  }
+});
+document.addEventListener('mouseover', e => { const v = e.target.closest('.preview video'); if (v) v.play().catch(() => {}); });
+document.addEventListener('mouseout', e => { const v = e.target.closest('.preview video'); if (v) v.pause(); });
+const hiddenBox = document.getElementById('show-hidden');
+hiddenBox.checked = showHidden;
+hiddenBox.addEventListener('change', () => { showHidden = hiddenBox.checked; store.set('hidden', showHidden); applyFilters(); });
+document.querySelectorAll('[data-filter]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.filter === filter)));
+
+if (location.protocol === 'file:') document.getElementById('file-banner').classList.remove('hidden');
+render();
+applyFilters();
+runChecks();
+</script>
+</body>
+</html>

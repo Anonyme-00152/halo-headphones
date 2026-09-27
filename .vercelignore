@@ -1,0 +1,8 @@
+# Outils locaux : inutiles (et non fonctionnels) sur le site en ligne
+tools/
+content/
+build.js
+server.js
+start.bat
+checklist-visuels.html
+README.md

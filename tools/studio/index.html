@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Studio HALO</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/",
+  "mp4-muxer": "https://cdn.jsdelivr.net/npm/mp4-muxer@5.1.5/+esm"
+} }
+</script>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; background: #111; color: #eee; font: 14px/1.5 Inter, system-ui, sans-serif; }
+  header { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 12px 16px; border-bottom: 1px solid #2a2a2a; }
+  h1 { font-size: 16px; margin: 0 16px 0 0; font-weight: 600; }
+  button, select { font: inherit; background: #222; color: #eee; border: 1px solid #333; border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  main { display: grid; grid-template-columns: 1fr 380px; gap: 16px; padding: 16px; }
+  canvas { max-width: 100%; max-height: 80vh; background: repeating-conic-gradient(#222 0 25%, #1a1a1a 0 50%) 0 0 / 20px 20px; }
+  pre { margin: 0; font-size: 12px; color: #aaa; white-space: pre-wrap; max-height: 80vh; overflow: auto; }
+  @media (max-width: 800px) { main { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<header>
+  <h1>Studio HALO</h1>
+  <button id="btn-analyze">1. Analyser les originaux</button>
+  <select id="shot"></select>
+  <button id="btn-preview">Aperçu</button>
+  <button id="btn-all">2. Tout rendre (remplace les visuels)</button>
+</header>
+<main>
+  <canvas id="preview" width="16" height="9"></canvas>
+  <pre id="log"></pre>
+</main>
+<script type="module" src="studio.js"></script>
+</body>
+</html>

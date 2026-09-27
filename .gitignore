@@ -1,0 +1,15 @@
+# Sauvegardes locales : visuels d'origine, page d'origine, aperçus du studio
+original-assets/
+index.original.htm
+tools/studio/out/
+
+# Autre projet présent dans ce dossier (sans rapport avec le site HALO)
+baseline/
+baseline-site.zip
+
+# Fichiers locaux
+.claude/
+.vercel/
+.env*
+webcopy-origin.txt
+node_modules/

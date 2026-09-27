@@ -1,0 +1,193 @@
+{
+  "_lisez_moi": [
+    "Modifie les textes ci-dessous, sauvegarde : la page se met à jour toute seule (ou lance « node build.js »).",
+    "« \\n » = retour à la ligne. Sur mobile, certains retours à la ligne deviennent des espaces automatiquement.",
+    "Ne renomme pas les clés (les noms à gauche des « : »). Les clés qui commencent par « _ » sont des notes.",
+    "Garde des longueurs proches de l'original : la mise en page (et le changement de couleur du header) est calée dessus.",
+    "L'original NŌTA est sauvegardé dans index.original.htm."
+  ],
+  "meta": {
+    "_info": "Onglet du navigateur, Google et aperçu de partage (WhatsApp, LinkedIn…). « image » = URL absolue de l'image d'aperçu, « url » = adresse finale du site : à remplacer quand le site sera en ligne.",
+    "lang": "en",
+    "title": "HALO | Wireless Headphones for Deep Listening",
+    "description": "HALO One are wireless over-ear headphones with adaptive noise cancelling, spatial audio, and 40 hours of battery life. Designed for people who listen with intent, they read the space around you in real time, tune themselves to your ears, and turn everyday noise into focused, immersive sound.",
+    "keywords": "wireless headphones, noise cancelling headphones, over-ear headphones, spatial audio, bluetooth headphones, adaptive noise cancelling, hi-res audio, premium headphones, personal sound profile",
+    "url": "https://nota.uprock.pro/",
+    "image": "https://nota.uprock.pro/thumb/2/gXn6B2hBFaNIr9pvHNIaWQ/350r350/d/opengraph.jpg"
+  },
+  "nav": {
+    "_info": "Liens du menu (header, menu mobile, footer).",
+    "specs": "Specifications",
+    "who": "Who it's for",
+    "about": "About",
+    "inside": "Inside the box"
+  },
+  "order": {
+    "_info": "Bouton de commande en haut à droite.",
+    "label": "Order",
+    "product": "Halo One",
+    "price": "$349"
+  },
+  "hero": {
+    "_info": "Grand titre de l'écran d'accueil (animation « scramble »).",
+    "title_line1": "Headphones",
+    "title_line2": "for deep focus"
+  },
+  "specs": {
+    "_info": "Section Spécifications : 3 cartes. Les « _short » sont des versions courtes affichées sur les écrans desktop plus petits.",
+    "eyebrow": "Halo One",
+    "title": "Specifications",
+    "card1": {
+      "title": "Sound System",
+      "item1": "40 mm custom drivers",
+      "item2": "Hi-Res wireless audio",
+      "item3": "Spatial audio with head tracking",
+      "item3_short": "Spatial audio, head tracking",
+      "item4": "Tuned for rich, detailed sound at any volume",
+      "item4_short": "Tuned for detailed sound"
+    },
+    "card2": {
+      "title": "Noise Control",
+      "item1": "Adaptive noise cancelling",
+      "item2": "Eight-microphone sensing",
+      "item3": "Instant transparency mode",
+      "item4": "Clear calls in wind, traffic and crowds",
+      "item4_short": "Clear calls anywhere"
+    },
+    "card3": {
+      "title": "All-Day Freedom",
+      "item1": "40 hours of battery life",
+      "item2": "5 min charge, 4 h play",
+      "item3": "Multipoint Bluetooth 5.4",
+      "item4": "Pauses when you lift it"
+    }
+  },
+  "who": {
+    "_info": "Section Who it's for. Sur desktop, chaque paragraphe est coupé en deux lignes (text1_start = 1re ligne, text1_end = la suite) ; sur mobile, les deux morceaux sont recollés.",
+    "intro": "Some sounds need silence around them to be heard.\nListening with intent creates focus, presence, and a deeper connection with music. Halo is built around that simple truth.",
+    "label": "Who it's for:",
+    "text1_start": "This is made for people who truly listen. It",
+    "text1_end": "keeps the world quiet and the sound honest, so you can stay inside your music or your work without noise in the way.",
+    "text2_start": "Everything adapts through the app, where",
+    "text2_end": "your sound is tuned to your ears and adjusts on its own to every place you go.",
+    "audience1": {
+      "title": "Commuters & Travelers",
+      "text": "Trains, planes, and busy streets fade into the background. Adaptive noise cancelling reacts to every change around you, so a long commute becomes quiet time — for music, podcasts, or simply a moment to think."
+    },
+    "audience2": {
+      "title": "Musicians, Creators & Producers",
+      "text": "Detail matters when you make sound. Tuned drivers and a neutral profile let you hear mixes as they are, while low-latency mode keeps audio and video in sync. Everything you hear is honest, precise, and ready to shape into something bigger — without breaking the flow."
+    },
+    "audience3": {
+      "title": "Remote Workers & Teams",
+      "text": "Meetings start anywhere and stay clear. Eight microphones isolate your voice from cafés and keyboards, while multipoint switches between laptop and phone on its own — keeping your attention in the conversation, not on the noise."
+    }
+  },
+  "paper": {
+    "_info": "Section noire à cartes empilées. slide1 = la 1re carte qu'on voit en scrollant (elle s'affiche avec le visuel « Slide 1 » de la checklist).",
+    "heading_gray": "Adapts to",
+    "heading": "your world",
+    "slide1": {
+      "title": "We listen to your space\nbefore you hear\nanything",
+      "subtitle": "For the system, noise is a map",
+      "text": "Eight microphones measure the sound around you thousands of times per second, mapping every hum, voice, and gust of wind. For you, the world simply goes quiet. For the system, it becomes a constant reference that shapes the noise cancelling in real time."
+    },
+    "slide2": {
+      "title": "Feels like silence.\nWorks like a system.",
+      "subtitle": "For you, it’s just quiet",
+      "text": "You press play and everything else fades. No settings to hunt for, no modes to switch between. The cushions seal softly, the sound stays clean, and nothing pulls you out of the moment. Nothing changes in how you listen — only how deep you can go."
+    },
+    "slide3": {
+      "title": "No hiss. No pressure.\nNo random dropouts.",
+      "subtitle": "AI-powered sound",
+      "text": "Audio is processed in real time and refined quietly in the background. AI recognizes voices, music, and places to balance noise cancelling, sharpen dialogue, and protect your hearing. The technology stays invisible, so your focus stays on sound."
+    },
+    "slide4": {
+      "title": "Your sound profile is synced\nto every device you own",
+      "subtitle": "Your settings. Already there.",
+      "text": "Your personal EQ and hearing profile follow you from phone to laptop to tablet. Switch devices mid-song without pairing again, keep your presets in one place, and pick up where you left off. Your listening becomes part of a system that is personal, consistent, and always ready."
+    }
+  },
+  "inside": {
+    "_info": "Section Inside the box. title_gray = le mot en gris du titre.",
+    "title_gray": "Inside",
+    "title": "the box",
+    "box": {
+      "title": "A complete, ready-to-use set",
+      "text": "Halo One headphones, travel case, USB-C cable, and audio cable — carefully packaged for an effortless start."
+    },
+    "description": "Wireless over-ear headphones with a machined aluminum frame, designed for long listening sessions and honest, detailed sound. Seamlessly connects to all your devices and adapts to every space you move through — no cables, no noise, just music.",
+    "item1": {
+      "title": "The HALO Headphones",
+      "text": "Aluminum frame, USB-C charging, physical noise control button, and Bluetooth 5.4.\nUp to 40 hours of listening with a lightweight, balanced design for all-day wear."
+    },
+    "item2": {
+      "title": "Travel Case",
+      "text": "Compact hard-shell case with a magnetic closure.\nFolds the headphones flat and protects them on every trip."
+    }
+  },
+  "details": {
+    "_info": "Légendes posées sur les gros plans (section noire) : label1 = gros plan 1 (arceau), label2 = gros plan 2 (bras, coloris bleu), label3 = la vidéo, label4 = gros plan 4 (bord de la coque).",
+    "label1": "Soft-touch headband",
+    "label2": "Refined colors. Personal expression",
+    "label3": "Telescopic steel arms, cushioned headband",
+    "label4": "Aluminum ear cups"
+  },
+  "colors": {
+    "_info": "Slider des coloris : un slogan puis 4 coloris (nom + phrase).",
+    "slogan_line1": "Made to",
+    "slogan_line2": "disappear",
+    "color1": {
+      "name": "Graphite Black.",
+      "tagline": "Clarity in silence."
+    },
+    "color2": {
+      "name": "Mist Blue.",
+      "tagline": "Light listening."
+    },
+    "color3": {
+      "name": "Precision Red.",
+      "tagline": "Form follows\nsound."
+    },
+    "color4": {
+      "name": "Bright Orange.",
+      "tagline": "Steady focus."
+    }
+  },
+  "footer": {
+    "about": "HALO creates headphones that respect how people listen.\nNatural sound, quietly connected to your world.",
+    "nav_title": "Navigation",
+    "year_title": "Concept by",
+    "year": "Ebubekir ARTI",
+    "copyright": "@2026 Halo",
+    "_info": "Pied de page. « year_title » / « year » = le bloc « Concept by » avec ton nom."
+  },
+  "form": {
+    "_info": "Popup « Stay ahead » (inscription).",
+    "title": "Stay ahead",
+    "text": "Launching soon. Get early access\u00a0\nand insider updates",
+    "button": "Notify me",
+    "success": "All set. We’ll keep you posted",
+    "error": "Something went wrong! Try again",
+    "error_required": "This field is required",
+    "error_server": "Something went wrong. Try again later",
+    "close": "Close",
+    "email_placeholder": "E-mail"
+  },
+  "images_alt": {
+    "_info": "Descriptions des images (accessibilité + Google), une par visuel. Elles décrivent les visuels du casque prévus : si tes images sont différentes, adapte le texte. Voir checklist-visuels.html pour les emplacements.",
+    "hero_mobile": "Silver Halo One wireless headphones, side view",
+    "specs_product": "Graphite Halo One headphones, side view",
+    "paper_slide1": "Halo One headphones folded flat on a dark surface",
+    "paper_slide2": "Close-up of the ear cushion and acoustic mesh",
+    "paper_slide3": "Halo One headphones folded next to the travel case",
+    "paper_slide4": "Phone showing the Halo app with a personal sound profile",
+    "colors_slogan": "Silver Halo One headphones",
+    "colors_color1": "Graphite Black Halo One headphones",
+    "colors_color2": "Mist Blue Halo One headphones",
+    "colors_color3": "Precision Red Halo One headphones",
+    "colors_color4": "Bright Orange Halo One headphones",
+    "order_popup": "Halo One wireless headphones in Mist Blue",
+    "logo": "Halo"
+  }
+}
