@@ -1,7 +1,7 @@
 // Studio: analyses the original visuals, then renders the HALO versions at the same paths.
 import * as THREE from 'three';
 import { Stage, sampleBackground, backgroundCanvas, toBlob, save } from './stage.js';
-import { SHOTS, moodFor, heroFrame, whoFrame, detailsFrame } from './shots.js';
+import { SHOTS, moodFor, heroFrame, whoFrame, detailsFrame, ogFrame, heroMobileFrame } from './shots.js';
 import { encodeMp4, rebuildLottie } from './video.js';
 
 const ANIMATIONS = { 'video-who': whoFrame, 'video-details': detailsFrame, 'hero-lottie': heroFrame };
@@ -162,6 +162,46 @@ async function renderAnimation(t, { to = t.path, ss = 1.5 } = {}) {
   return { path: to, kb: Math.round(blob.size / 1024) };
 }
 
+// Portrait hero sequence for phones, packed like the desktop Lottie (one JSON, frames as data URIs).
+// assets/halo-mobile.js draws these frames on a canvas as the visitor scrolls.
+async function renderHeroMobile({ to = 'f/hero-mobile.json', frames = 60, w = 720, h = 1280, quality = 0.7 } = {}) {
+  const hero = targets.find(t => t.shot === 'hero-lottie');
+  const background = backgroundCanvas(analysis[hero.path], w, h);
+  const out = { v: '5.7.4', fr: 15, ip: 0, op: frames, w, h, nm: 'hero-mobile', assets: [] };
+  for (let i = 0; i < frames; i++) {
+    const { scene, camera } = heroMobileFrame(stage, w / h, i / (frames - 1));
+    const c = stage.render(scene, camera, w, h, { background, ss: 1.5 });
+    dispose(scene);
+    out.assets.push({ id: `image_${i}`, w, h, e: 1, p: c.toDataURL('image/webp', quality) });
+    if (i % 10 === 0) log(`hero mobile ${i}/${frames}`);
+    if (i === frames - 1) show(c);
+    await new Promise(r => setTimeout(r, 0));
+  }
+  const blob = new Blob([JSON.stringify(out)], { type: 'application/json' });
+  await save(to, blob);
+  return { to, kb: Math.round(blob.size / 1024) };
+}
+
+// Link preview image (WhatsApp, LinkedIn…): last hero frame + name and tagline in the site's fonts.
+async function renderOg({ to = 'og-image.jpg', w = 1200, h = 630 } = {}) {
+  const hero = targets.find(t => t.shot === 'hero-lottie');
+  const { scene, camera } = ogFrame(stage, w / h);
+  const c = stage.render(scene, camera, w, h, { background: backgroundCanvas(analysis[hero.path], w, h) });
+  dispose(scene);
+  await Promise.all([document.fonts.load('400 96px "Instrument Serif"'), document.fonts.load('500 32px Inter')]);
+  const g = c.getContext('2d');
+  g.fillStyle = '#ffffff';
+  g.font = '500 34px Inter';
+  g.fillText('HALO', 64, 92);
+  g.font = '400 92px "Instrument Serif"';
+  g.fillText('Headphones', 60, h - 150);
+  g.fillText('for deep focus', 60, h - 66);
+  const blob = await toBlob(c, 'JPG');
+  await save(to, blob);
+  show(c);
+  return { to, kb: Math.round(blob.size / 1024) };
+}
+
 async function renderAll(filter = () => true) {
   const list = targets.filter(t => (SHOTS[t.shot] || ANIMATIONS[t.shot]) && filter(t));
   let n = 0;
@@ -175,7 +215,7 @@ async function renderAll(filter = () => true) {
   return n;
 }
 
-window.studio = { targets, analyze, preview, renderTarget, renderAnimation, renderAll, contactSheet, heroSheet, get analysis() { return analysis; }, stage, THREE };
+window.studio = { targets, analyze, preview, renderTarget, renderAnimation, renderAll, renderOg, renderHeroMobile, contactSheet, heroSheet, get analysis() { return analysis; }, stage, THREE };
 
 const sel = document.getElementById('shot');
 [...new Set(targets.map(t => t.shot))].filter(s => SHOTS[s]).forEach(s => sel.add(new Option(s, s)));
