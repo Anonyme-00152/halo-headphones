@@ -246,7 +246,66 @@
     // ---------- 7. Coloris : les cinq coloris défilent au scroll ----------
     scrollSlider({ section: '#ius70bmqv_0', swiperEl: '#i0z78cl1f_0', steps: 5, perStep: 70, onChange: zoomActive });
 
+    headerContrast();
     ScrollTrigger.refresh();
+  }
+
+  // ---------- Header lisible pendant les transitions ajoutées ----------
+  // Le script d'origine colore le header selon la section qui passe dessous, mais ne connaît pas
+  // les transitions ci-dessus, qui inversent le fond (rideaux blancs, bandes noires, fond qui noircit,
+  // cercle blanc). Dans ces zones, on regarde ce qui est réellement derrière le header à chaque image.
+  // Ailleurs on reprend ses sections, mais mesurées sous le header affiché : lui mesure le header caché
+  // (au-dessus de l'écran) et se trompe dès qu'une section est épinglée en haut.
+  function headerContrast() {
+    const header = $('.header__wrapper');
+    if (!header) return;
+    const parts = [...$$('.header__icon'), $('.header__burger'), $('.header__logo-icon')].filter(Boolean);
+    const within = (el, y) => { const r = el.getBoundingClientRect(); return r.top <= y && r.bottom > y; };
+    const set = color => {
+      if (parts.every(p => p.style.color === color)) return;
+      parts.forEach(p => (p.style.color = color));
+      header.style.borderBottom = `1px solid ${color === WHITE ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)'}`;
+    };
+    const WHITE = 'rgb(255, 255, 255)', BLACK = 'rgb(0, 0, 0)';
+    const cover = $('#iyzjstuxs_0'), curtains = $$('.halo-m-curtains i');
+    const wipeTop = $('.halo-m-wipe i'), wipe = $('.halo-m-wipe');
+    const paperHead = $('#irlxty1yt_0');
+    const insideTitle = $('#icty6qooh_0'), circle = $('.halo-m-circle');
+    // mêmes sections et couleurs que le script d'origine (TABLET + MOBILE)
+    const sections = [
+      ['.specs--static', BLACK], ['.who--static', WHITE], ['.paper__cover--static', BLACK],
+      ['.paper__slider--static', WHITE], ['.inside--static', BLACK], ['.details--static', WHITE],
+    ].map(([sel, color]) => [$(sel), color]).filter(([el]) => el);
+
+    gsap.ticker.add(() => {
+      // bas du header quand il est affiché (il se cache en remontant quand on descend)
+      const y = header.offsetHeight;
+      if (cover && curtains.length && within(cover, y)) {
+        // rideaux blancs : noir dès que la plupart des bandes sont montées jusqu'au header
+        const h = cover.getBoundingClientRect().height;
+        const up = curtains.filter(c => (gsap.getProperty(c, 'yPercent') / 100) * h <= y).length;
+        set(up >= curtains.length / 2 ? BLACK : WHITE);
+      } else if (wipe && wipeTop && within(wipe, y)) {
+        // bandes noires sur fond blanc : la bande du haut passe derrière le header
+        set(gsap.getProperty(wipeTop, 'scaleX') > 0.5 ? WHITE : BLACK);
+      } else if (paperHead && within(paperHead, y)) {
+        // fond qui passe du blanc (transparent sur la page blanche) au noir
+        const [r, g, b, a = 1] = (getComputedStyle(paperHead).backgroundColor.match(/[\d.]+/g) || [255, 255, 255]).map(Number);
+        const lum = (0.2126 * r + 0.7152 * g + 0.0722 * b) * a + 255 * (1 - a);
+        set(lum < 128 ? WHITE : BLACK);
+      } else if (insideTitle && circle && within(insideTitle, y)) {
+        // cercle blanc sur fond noir : noir quand il recouvre les deux coins du header
+        const c = circle.getBoundingClientRect();
+        const cx = c.left + c.width / 2, cy = c.top + c.height / 2, radius = c.width / 2;
+        const covered = [0, window.innerWidth].every(x => Math.hypot(x - cx, y - cy) <= radius);
+        set(covered ? BLACK : WHITE);
+      } else {
+        // dernière section commencée sous le header (blanc avant la première)
+        let color = WHITE;
+        for (const [el, c] of sections) if (el.getBoundingClientRect().top <= y) color = c;
+        set(color);
+      }
+    });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setup);
